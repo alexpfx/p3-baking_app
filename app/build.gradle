@@ -4,7 +4,6 @@ apply plugin: 'com.android.application'
 
 android {
 
-
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -20,6 +19,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -40,14 +47,23 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:' + glideVersion
     annotationProcessor 'com.github.bumptech.glide:compiler:' + glideVersion
 
-    compile 'android.arch.persistence.room:rxjava2:' + archRoomVersion
-    compile 'com.squareup.retrofit2:retrofit:' + retrofitVersion
+    compile "android.arch.persistence.room:runtime:" + archVersion
+    annotationProcessor "android.arch.persistence.room:compiler:" + archVersion
 
+    compile "android.arch.lifecycle:extensions:" + archVersion
+    annotationProcessor "android.arch.lifecycle:compiler:" + archVersion
+
+    compile 'com.squareup.retrofit2:retrofit:' + retrofitVersion
     compile 'com.squareup.retrofit2:converter-gson:' + retrofitConvertersVersion
     compile 'com.squareup.retrofit2:converter-scalars:' + retrofitConvertersVersion
 
     compile "io.reactivex.rxjava2:rxandroid:" + rxAndroidVersion
 
+    compile 'com.squareup.retrofit2:adapter-rxjava2:' + rx2RetrofitCallAdapter
+
     compile 'com.android.support:support-v4:' + supportVersion
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
 }
