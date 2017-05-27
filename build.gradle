@@ -27,16 +27,19 @@ task clean(type: Delete) {
 
 ext{
 
-    androidBuildToolsVersion = "25.0.2"
-    androidMinSdkVersion = 19
-    androidTargetSdkVersion = 'O'
-    androidCompileSdkVersion = 'O'
+    buildToolsVersion = "25.0.2"
+    minSdkVersion = 19
+    targetSdkVersion = 25
+    compileSdkVersion = 25
+
+    supportVersion = '25.3.1'
+    archVersion = '1.0.0-alpha1'
 
     butterKnifeVersion = "8.5.1"
-    glideVersion = '4.0.0-RC0'
-    supportVersion = '25.3.1'
+    glideVersion = '3.8.0'
+
     junitVersion = '4.12'
-    archVersion = '1.0.0-alpha1'
+
     retrofitVersion = '2.3.0'
     retrofitConvertersVersion = '2.1.0'
     rx2RetrofitCallAdapter = '2.3.0'

@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
@@ -9,12 +9,11 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by alexandre on 24/05/2017.
  */
-
 @Entity(tableName = "ingredients", foreignKeys =
 @ForeignKey(entity = Recipe.class, parentColumns = "id", childColumns = "recipeId"))
 public class Ingredient {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     @SerializedName("quantity")
@@ -27,6 +26,7 @@ public class Ingredient {
     private String ingredient;
 
     private Integer recipeId;
+
 
     public double getQuantity() {
         return quantity;
@@ -67,6 +67,4 @@ public class Ingredient {
     public void setRecipeId(Integer recipeId) {
         this.recipeId = recipeId;
     }
-
-
 }

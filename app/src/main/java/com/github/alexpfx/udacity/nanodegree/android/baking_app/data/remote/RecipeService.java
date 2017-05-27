@@ -1,4 +1,6 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.data;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote;
+
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
 
 import io.reactivex.Flowable;
 import retrofit2.Retrofit;
@@ -17,9 +19,10 @@ public class RecipeService {
     private static final String URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     public RecipeService() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://d17h27t6h515a5.cloudfront.net/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://d17h27t6h515a5.cloudfront.net")
                 .addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
         mEndpoints = retrofit.create(Endpoints.class);
+
     }
 
     public Flowable<Recipe[]> getAllRecipes() {

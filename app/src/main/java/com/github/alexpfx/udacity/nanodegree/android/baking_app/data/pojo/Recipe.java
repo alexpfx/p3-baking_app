@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
@@ -82,5 +82,20 @@ public class Recipe {
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
+
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", servings=" + servings +
+                ", image='" + image + '\'' +
+                ", ingredients=" + ingredients +
+                ", steps=" + steps +
+                '}';
+    }
 }
+
+
 
