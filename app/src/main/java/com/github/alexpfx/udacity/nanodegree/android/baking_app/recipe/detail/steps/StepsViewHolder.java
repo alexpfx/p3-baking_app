@@ -1,15 +1,32 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
+
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseViewHolder;
+
+import butterknife.BindView;
 
 /**
  * Created by alexandre on 27/05/2017.
  */
 
-public class StepsViewHolder extends RecyclerView.ViewHolder {
+public class StepsViewHolder extends BaseViewHolder<Step> {
 
-    public StepsViewHolder(View itemView) {
-        super(itemView);
+    @BindView(R.id.text_step_short_description)
+    TextView textStepShortDescription;
+    @BindView(R.id.text_step_description)
+    TextView textStepDescription;
+
+    public StepsViewHolder(View view) {
+        super(view);
+    }
+
+    @Override
+    public void bind(Step step) {
+        textStepShortDescription.setText(step.getShortDescription());
+        textStepDescription.setText(step.getDescription());
     }
 }

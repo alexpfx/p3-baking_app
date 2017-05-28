@@ -66,7 +66,7 @@ public class RecipesFragment extends LifecycleFragment {
 
 
         mViewModel.getRecipes().observe(this, recipes -> {
-            adapterRecipes.swapRecipes(recipes);
+            adapterRecipes.swapItemList(recipes);
             Log.d(TAG, "onCreateView: "+recipes);
         });
 

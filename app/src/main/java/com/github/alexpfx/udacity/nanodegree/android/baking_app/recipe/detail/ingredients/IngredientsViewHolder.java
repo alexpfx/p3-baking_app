@@ -1,19 +1,19 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.ingredients;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseViewHolder;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by alexandre on 27/05/2017.
  */
 
-public class IngredientsViewHolder extends RecyclerView.ViewHolder {
+public class IngredientsViewHolder extends BaseViewHolder<Ingredient> {
 
 
     @BindView(R.id.text_quantity)
@@ -25,7 +25,13 @@ public class IngredientsViewHolder extends RecyclerView.ViewHolder {
 
     public IngredientsViewHolder(View view) {
         super(view);
-        ButterKnife.bind(this, view);
+    }
+
+    @Override
+    public void bind(Ingredient ingredient) {
+        textIngredient.setText(ingredient.getIngredient());
+        textMeasure.setText(ingredient.getMeasure());
+        textQuantity.setText(String.valueOf(ingredient.getQuantity()));
     }
 
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapter;
@@ -14,46 +13,28 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapt
  * Created by alexandre on 25/05/2017.
  */
 
-public class RecipesAdapter extends BaseAdapter<Recipe, RecipesViewHolder>{
+public class RecipesAdapter extends BaseAdapter<Recipe, RecipesViewHolder> {
 
-    private Context mContext;
-    private View.OnClickListener mClickListener;
 
-    public RecipesAdapter(Context context, View.OnClickListener clickListener) {
+    private final View.OnClickListener mOnClickListener;
 
-        mContext = context;
-        mClickListener = clickListener;
+    public RecipesAdapter(Context context, View.OnClickListener onClickListener) {
+        super(context);
+        mOnClickListener = onClickListener;
     }
 
     @Override
     public RecipesViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recipe, viewGroup, false);
-        return new RecipesViewHolder(view);
+        return new RecipesViewHolder(view, getContext());
     }
 
-    private static final String TAG = "RecipesAdapter";
 
     @Override
     public void onBindViewHolder(RecipesViewHolder holder, int position) {
-        Recipe recipe = getItemList().get(position);
-        String name = recipe.getName();
-        holder.textRecipeName.setText(name);
-        View rootView = holder.textRecipeName.getRootView();
-        rootView.setTag(recipe);
-        rootView.setOnClickListener(mClickListener);
-
-        if (recipe.getImage() == null || recipe.getImage().isEmpty()) {
-            int drawable = getRecipeImage(recipe);
-            Glide.with(mContext).load(drawable).asBitmap().centerCrop().into(holder.imageBackground);
-        } else {
-            Glide.with(mContext).load(recipe.getImage()).asBitmap().centerCrop().into(holder.imageBackground);
-        }
-    }
-
-    private int getRecipeImage(Recipe recipe) {
-        String n = recipe.getName().toLowerCase().replaceAll("\\s", "");
-        return mContext.getResources().getIdentifier(n, "drawable", mContext.getPackageName());
-
+        Recipe recipe = getItemAt(position);
+        holder.setOnClickListener(mOnClickListener, recipe);
+        holder.bind(recipe);
     }
 
 
