@@ -1,0 +1,46 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.StepIngredientsFragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_between_view_groups"
+            android:paddingBottom="@dimen/padding_after_titles"
+            android:text="@string/ingredients"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_between_view_groups"
+            android:paddingBottom="@dimen/padding_after_titles"
+            android:text="@string/steps"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+</ScrollView>

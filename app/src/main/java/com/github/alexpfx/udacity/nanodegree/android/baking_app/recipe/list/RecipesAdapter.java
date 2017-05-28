@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +8,13 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapter;
 
 /**
  * Created by alexandre on 25/05/2017.
  */
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
-
-    private List<Recipe> recipes = new ArrayList<>();
+public class RecipesAdapter extends BaseAdapter<Recipe, RecipesViewHolder>{
 
     private Context mContext;
     private View.OnClickListener mClickListener;
@@ -40,7 +35,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
 
     @Override
     public void onBindViewHolder(RecipesViewHolder holder, int position) {
-        Recipe recipe = recipes.get(position);
+        Recipe recipe = getItemList().get(position);
         String name = recipe.getName();
         holder.textRecipeName.setText(name);
         View rootView = holder.textRecipeName.getRootView();
@@ -61,15 +56,5 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> {
 
     }
 
-    @Override
-    public int getItemCount() {
-        return recipes.size();
-    }
-
-
-    public void swapRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
-        notifyDataSetChanged();
-    }
 
 }
