@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseAdapter;
 
 /**
  * Created by alexandre on 28/05/2017.
@@ -16,7 +16,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapt
 public class StepsAdapter extends BaseAdapter<Step, StepsViewHolder> {
     private View.OnClickListener mOnClickListener;
 
-    protected StepsAdapter(Context context, View.OnClickListener onClickListener) {
+    public StepsAdapter(Context context, View.OnClickListener onClickListener) {
         super(context);
         mOnClickListener = onClickListener;
     }

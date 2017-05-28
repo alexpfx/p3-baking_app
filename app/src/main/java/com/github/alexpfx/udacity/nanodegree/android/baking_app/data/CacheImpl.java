@@ -37,11 +37,15 @@ public class CacheImpl implements Cache {
             for (Recipe recipe : recipes) {
                 mLocal.recipeDao().insert(recipe);
 
+                int count = 1;
                 for (Ingredient ingredient : recipe.getIngredients()) {
+                    ingredient.setId(count ++);
+                    ingredient.setRecipeId(recipe.getId());
                     mLocal.ingredientDao().insert(ingredient);
                 }
 
                 for (Step step : recipe.getSteps()) {
+                    step.setRecipeId(recipe.getId());
                     mLocal.stepDao().insert(step);
                 }
 

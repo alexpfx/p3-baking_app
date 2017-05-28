@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
 @ForeignKey(entity = Recipe.class, parentColumns = "id", childColumns = "recipeId"))
 public class Ingredient {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int id;
 
     @SerializedName("quantity")

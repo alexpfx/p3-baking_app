@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseAdapter;
 
 /**
  * Created by alexandre on 25/05/2017.

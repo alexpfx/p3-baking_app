@@ -82,4 +82,17 @@ public class Step {
     public void setRecipeId(Integer recipeId) {
         this.recipeId = recipeId;
     }
+
+
+    @Override
+    public String toString() {
+        return "Step{" +
+                "id=" + id +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", description='" + description + '\'' +
+                ", videoURL='" + videoURL + '\'' +
+                ", thumbnailURL='" + thumbnailURL + '\'' +
+                ", recipeId=" + recipeId +
+                '}';
+    }
 }

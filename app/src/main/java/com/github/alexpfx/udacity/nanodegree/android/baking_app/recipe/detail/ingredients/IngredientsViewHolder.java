@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseViewHolder;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseViewHolder;
 
 import butterknife.BindView;
 

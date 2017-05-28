@@ -2,7 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list;
 
 import android.arch.lifecycle.LiveData;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.RecipeDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
 
 import java.util.List;
@@ -11,16 +11,16 @@ import java.util.List;
  * Created by alexandre on 27/05/2017.
  */
 
-class RecipesRepositoryImpl implements RecipesRepository {
+public class RecipesRepositoryImpl implements RecipesRepository {
 
-    BakingAppDatabase mDatabase;
+    RecipeDao mRecipeDao;
 
-    public RecipesRepositoryImpl(BakingAppDatabase database) {
-        mDatabase = database;
+    public RecipesRepositoryImpl(RecipeDao recipeDao) {
+        mRecipeDao = recipeDao;
     }
 
     @Override
     public LiveData<List<Recipe>> getRecipes() {
-        return mDatabase.recipeDao().getAll();
+        return mRecipeDao.getAll();
     }
 }

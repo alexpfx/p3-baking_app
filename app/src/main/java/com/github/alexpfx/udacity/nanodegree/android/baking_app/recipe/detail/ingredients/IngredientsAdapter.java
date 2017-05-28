@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseAdapter;
 
 /**
  * Created by alexandre on 27/05/2017.
@@ -15,11 +15,9 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.BaseAdapt
 
 public class IngredientsAdapter extends BaseAdapter<Ingredient, IngredientsViewHolder> {
 
-    private View.OnClickListener mOnClickListener;
 
-    public IngredientsAdapter(Context context, View.OnClickListener onClickListener) {
+    public IngredientsAdapter(Context context) {
         super(context);
-        mOnClickListener = onClickListener;
     }
 
     @Override
@@ -31,7 +29,6 @@ public class IngredientsAdapter extends BaseAdapter<Ingredient, IngredientsViewH
     @Override
     public void onBindViewHolder(IngredientsViewHolder holder, int position) {
         Ingredient ingredient = getItemAt(position);
-        holder.setOnClickListener(mOnClickListener, ingredient);
         holder.bind(ingredient);
 
 

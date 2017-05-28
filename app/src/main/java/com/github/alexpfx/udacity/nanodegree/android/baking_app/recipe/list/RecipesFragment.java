@@ -2,21 +2,25 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list;
 
 
 import android.arch.lifecycle.LifecycleFragment;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.RecipeDetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +32,7 @@ import butterknife.ButterKnife;
 public class RecipesFragment extends LifecycleFragment {
 
     private static final String TAG = "RecipesFragment";
+
     @BindView(R.id.recycler_recipes)
     RecyclerView recyclerRecipes;
 
@@ -36,6 +41,9 @@ public class RecipesFragment extends LifecycleFragment {
         @Override
         public void onClick(View v) {
             Recipe r = (Recipe) v.getTag();
+            Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
+            intent.putExtra(RecipeDetailActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
+            startActivity(intent);
         }
     };
     private RecipesViewModel mViewModel;
@@ -50,24 +58,26 @@ public class RecipesFragment extends LifecycleFragment {
                              Bundle savedInstanceState) {
 
 
-        Log.d(TAG, "onCreateView: ");
-
         View view = inflater.inflate(R.layout.fragment_recipes, container, false);
 
         ButterKnife.bind(this, view);
-
-        mViewModel = ViewModelProviders.of(this).get(RecipesViewModel.class);
         BakingAppDatabase database =
-                Room.databaseBuilder(getContext(), BakingAppDatabase.class, "baking_database").build();
+                Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
 
-        mViewModel.injectRepository(new RecipesRepositoryImpl(database));
-        setupRecycler ();
+        mViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
+            @Override
+            public <T extends ViewModel> T create(Class<T> modelClass) {
+                RecipesViewModel viewModel = new RecipesViewModel(new RecipesRepositoryImpl(database.recipeDao()));
+                viewModel.initialize();
+                return (T) viewModel;
+            }
+        }).get(RecipesViewModel.class);
 
+        setupRecycler();
 
 
         mViewModel.getRecipes().observe(this, recipes -> {
             adapterRecipes.swapItemList(recipes);
-            Log.d(TAG, "onCreateView: "+recipes);
         });
 
 
@@ -76,7 +86,6 @@ public class RecipesFragment extends LifecycleFragment {
     }
 
     private void setupRecycler() {
-
         adapterRecipes = new RecipesAdapter(getContext(), onItemClick);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

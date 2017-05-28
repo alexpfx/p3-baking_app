@@ -11,7 +11,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
  * Created by alexandre on 24/05/2017.
  */
 
-@Database(entities = {Recipe.class,Ingredient.class, Step.class}, version = 2)
+@Database(entities = {Recipe.class,Ingredient.class, Step.class}, version = 3)
 public abstract class BakingAppDatabase extends RoomDatabase {
 
     public abstract StepDao stepDao ();
