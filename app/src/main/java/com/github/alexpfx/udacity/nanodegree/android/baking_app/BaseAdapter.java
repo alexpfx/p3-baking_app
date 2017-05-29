@@ -25,6 +25,7 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
 
     protected T getItemAt (int position){
         return mItemList.get(position);
+
     }
 
 

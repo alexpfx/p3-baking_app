@@ -15,18 +15,23 @@ import butterknife.BindView;
 
 public class StepsViewHolder extends BaseViewHolder<Step> {
 
-    @BindView(R.id.text_step_short_description)
-    TextView textStepShortDescription;
+//    @BindView(R.id.text_step_short_description)
+//    TextView textStepShortDescription;
+//
+
     @BindView(R.id.text_step_description)
     TextView textStepDescription;
 
     public StepsViewHolder(View view) {
         super(view);
+
     }
 
     @Override
     public void bind(Step step) {
-        textStepShortDescription.setText(step.getShortDescription());
+//        textStepShortDescription.setText(step.getShortDescription());
         textStepDescription.setText(step.getDescription());
+
+
     }
 }

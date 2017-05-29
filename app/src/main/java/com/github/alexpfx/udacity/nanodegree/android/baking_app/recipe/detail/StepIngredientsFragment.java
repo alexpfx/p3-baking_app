@@ -136,6 +136,7 @@ public class StepIngredientsFragment extends LifecycleFragment {
                 layoutManager.getOrientation());
 
         recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setNestedScrollingEnabled(false);
 
 
     }

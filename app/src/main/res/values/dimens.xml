@@ -4,4 +4,5 @@
     <dimen name="margin_between_view_groups">16dp</dimen>
     <dimen name="padding_after_titles">8dp</dimen>
     <dimen name="padding_internal_views">4dp</dimen>
+
 </resources>
