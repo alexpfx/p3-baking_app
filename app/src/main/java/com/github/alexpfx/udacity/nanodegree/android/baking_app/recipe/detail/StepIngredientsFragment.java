@@ -27,6 +27,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.in
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.ingredients.IngredientsRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.ingredients.IngredientsViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps.StepsAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps.StepsRepositoryImpl;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps.StepsViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +49,10 @@ public class StepIngredientsFragment extends LifecycleFragment {
     RecyclerView mRecyclerSteps;
 
     private OnStepClickListener mOnStepClickListener;
-    private IngredientsViewModel mViewModel;
+    private IngredientsViewModel mIngredientsViewModel;
     private IngredientsAdapter mIngredientsAdapter;
+
+    private StepsViewModel mStepsViewModel;
     private StepsAdapter mStepsAdapter;
 
     public interface OnStepClickListener {
@@ -66,10 +70,14 @@ public class StepIngredientsFragment extends LifecycleFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupViewModel ();
-        mViewModel.getIngredientsByRecipe().observe(this, ingredients -> {
+        setupViewModels();
+        mIngredientsViewModel.getIngredientsByRecipe().observe(this, ingredients -> {
             Log.d(TAG, "onActivityCreated: "+ingredients);
             mIngredientsAdapter.swapItemList(ingredients);
+        });
+        mStepsViewModel.getStepsByRecipe().observe(this, steps -> {
+            Log.d(TAG, "onActivityCreated: "+steps);
+            mStepsAdapter.swapItemList(steps);
         });
     }
 
@@ -88,19 +96,34 @@ public class StepIngredientsFragment extends LifecycleFragment {
         return view;
     }
 
-    private void setupViewModel() {
+    private void setupViewModels() {
         BakingAppDatabase database =
                 Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
-        mViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
+        mIngredientsViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
             @Override
             public <T extends ViewModel> T create(Class<T> modelClass) {
-                IngredientsViewModel ingredientsViewModel = new IngredientsViewModel(new IngredientsRepositoryImpl(database.ingredientDao()));
-                String id = getArguments().getString(KEY_RECIPE_ID);
-                ingredientsViewModel.initialize(Integer.parseInt(id));
+                IngredientsViewModel vm = new IngredientsViewModel(new IngredientsRepositoryImpl(database.ingredientDao()));
+                String id = getRecipeId();
+                vm.initialize(Integer.valueOf(id));
                 Toast.makeText(getContext(), "id (id): "+id, Toast.LENGTH_SHORT).show();
-                return (T) ingredientsViewModel;
+                return (T) vm;
             }
         }).get(IngredientsViewModel.class);
+
+        mStepsViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
+            @Override
+            public <T extends ViewModel> T create(Class<T> modelClass) {
+                StepsViewModel vm = new StepsViewModel(new StepsRepositoryImpl(database.stepDao()));
+                String recipeId = getRecipeId();
+                vm.initialize(Integer.valueOf(recipeId));
+                return (T) vm;
+            }
+        }).get(StepsViewModel.class);
+
+    }
+
+    private String getRecipeId() {
+        return getArguments().getString(KEY_RECIPE_ID);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter) {

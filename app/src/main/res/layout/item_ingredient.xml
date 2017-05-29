@@ -7,36 +7,17 @@
 
 
     <TextView
-        android:id="@+id/text_quantity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1.5"
-        android:paddingLeft="@dimen/padding_internal_views"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        tools:text="1000"
-        />
-
-    <TextView
-        android:id="@+id/text_measure"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1.5"
-        android:paddingLeft="@dimen/padding_internal_views"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        tools:text="TBLSP"
-        />
-
-    <TextView
         android:id="@+id/text_ingredient"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="7"
+        android:layout_gravity="left|start"
+        android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/padding_internal_views"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Nutella or other chocolate-hazelnut spread"
         />
+
+
+
 
 </LinearLayout>

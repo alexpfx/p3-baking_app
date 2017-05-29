@@ -2,18 +2,16 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by alexandre on 24/05/2017.
  */
-@Entity(tableName = "ingredients", foreignKeys =
+@Entity(tableName = "ingredients", primaryKeys = {"id", "recipeId"},foreignKeys =
 @ForeignKey(entity = Recipe.class, parentColumns = "id", childColumns = "recipeId"))
 public class Ingredient {
 
-    @PrimaryKey
     private int id;
 
     @SerializedName("quantity")

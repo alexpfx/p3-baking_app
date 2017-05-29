@@ -21,20 +21,22 @@ public interface StepDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert (Step step);
+    void insert(Step step);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void update (Step step);
+    void update(Step step);
 
     @Delete
-    void delete (Step step);
+    void delete(Step step);
 
     @Query("select * from steps")
-    LiveData<List<Step>> getAll ();
+    LiveData<List<Step>> getAll();
 
     @Query("select * from steps where id = :id")
-    LiveData<Step> getById (int id);
+    LiveData<Step> getById(int id);
 
+    @Query("select * from steps where recipeId = :recipeId")
+    LiveData<List<Step>> getAllByRecipe(int recipeId);
 
 
 }

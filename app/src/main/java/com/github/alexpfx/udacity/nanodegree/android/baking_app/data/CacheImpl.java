@@ -1,5 +1,7 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.data;
 
+import android.util.Log;
+
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
@@ -36,15 +38,16 @@ public class CacheImpl implements Cache {
         flowable.subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(recipes -> {
             for (Recipe recipe : recipes) {
                 mLocal.recipeDao().insert(recipe);
-
                 int count = 1;
                 for (Ingredient ingredient : recipe.getIngredients()) {
-                    ingredient.setId(count ++);
+                    ingredient.setId(count++);
                     ingredient.setRecipeId(recipe.getId());
                     mLocal.ingredientDao().insert(ingredient);
                 }
 
+                Log.d(TAG, "updateDatabase: ");
                 for (Step step : recipe.getSteps()) {
+                    Log.d(TAG, "updateDatabase: "+step);
                     step.setRecipeId(recipe.getId());
                     mLocal.stepDao().insert(step);
                 }

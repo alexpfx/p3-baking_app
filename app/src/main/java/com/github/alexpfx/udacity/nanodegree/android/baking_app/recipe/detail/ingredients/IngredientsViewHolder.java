@@ -16,10 +16,6 @@ import butterknife.BindView;
 public class IngredientsViewHolder extends BaseViewHolder<Ingredient> {
 
 
-    @BindView(R.id.text_quantity)
-    TextView textQuantity;
-    @BindView(R.id.text_measure)
-    TextView textMeasure;
     @BindView(R.id.text_ingredient)
     TextView textIngredient;
 
@@ -29,9 +25,17 @@ public class IngredientsViewHolder extends BaseViewHolder<Ingredient> {
 
     @Override
     public void bind(Ingredient ingredient) {
-        textIngredient.setText(ingredient.getIngredient());
-        textMeasure.setText(ingredient.getMeasure());
-        textQuantity.setText(String.valueOf(ingredient.getQuantity()));
+        double quantity = ingredient.getQuantity();
+        String text = getFormatedText(ingredient, quantity);
+        textIngredient.setText(text);
+    }
+
+    private String getFormatedText(Ingredient ingredient, double quantity) {
+        if (quantity == (long) quantity) {
+            return String.format("%s %s - %s", String.valueOf(quantity), ingredient.getMeasure(), ingredient.getIngredient());
+        } else {
+            return String.format("%.1f %s - %s", quantity, ingredient.getMeasure(), ingredient.getIngredient());
+        }
     }
 
 

@@ -31,5 +31,6 @@ public class StepsAdapter extends BaseAdapter<Step, StepsViewHolder> {
     public void onBindViewHolder(StepsViewHolder holder, int position) {
         Step step = getItemAt(position);
         holder.setOnClickListener(mOnClickListener, step);
+        holder.bind(step);
     }
 }
