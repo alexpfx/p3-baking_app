@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.arch.persistence.room.Room;
 import android.os.Bundle;

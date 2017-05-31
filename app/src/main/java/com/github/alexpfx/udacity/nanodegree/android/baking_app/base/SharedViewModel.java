@@ -8,7 +8,7 @@ import android.arch.lifecycle.ViewModel;
  * Created by alexandre on 30/05/2017.
  */
 
-public class BaseSharedViewModel<T> extends ViewModel {
+public class SharedViewModel<T> extends ViewModel {
 
     private final MutableLiveData<T> selected = new MutableLiveData<>();
 

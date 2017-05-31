@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.base;
 
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;

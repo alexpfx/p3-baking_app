@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.steps;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps;
 
 import android.view.View;
 import android.widget.TextView;

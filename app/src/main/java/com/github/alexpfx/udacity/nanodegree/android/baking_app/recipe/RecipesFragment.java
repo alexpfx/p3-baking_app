@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 
 import android.arch.lifecycle.LifecycleFragment;
@@ -16,11 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseApplication;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.RecipeDetailActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.StepActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,8 +41,8 @@ public class RecipesFragment extends LifecycleFragment {
         @Override
         public void onClick(View v) {
             Recipe r = (Recipe) v.getTag();
-            Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
-            intent.putExtra(RecipeDetailActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
+            Intent intent = new Intent(getContext(), StepActivity.class);
+            intent.putExtra(StepActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
             startActivity(intent);
         }
     };

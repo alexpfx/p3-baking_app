@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ingredients;
 
 import android.content.Context;
 import android.view.LayoutInflater;

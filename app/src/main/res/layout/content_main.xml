@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipeActivity"
+    tools:showIn="@layout/activity_recipe">
 
     <fragment
         android:id="@+id/recipes_fragment"
-        android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list.RecipesFragment"
+        android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.steps;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps;
 
 
 import android.arch.lifecycle.LifecycleFragment;
@@ -19,14 +19,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.StepActivity;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients.IngredientsAdapter;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients.IngredientsRepositoryImpl;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients.IngredientsViewModel;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ingredients.IngredientsAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ingredients.IngredientsRepositoryImpl;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ingredients.IngredientsViewModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,16 +47,16 @@ public class StepListFragment extends LifecycleFragment {
     @BindView(R.id.recycler_steps)
     RecyclerView mRecyclerSteps;
 
-    private OnStepClickListener mOnStepClickListener;
     private IngredientsViewModel mIngredientsViewModel;
     private IngredientsAdapter mIngredientsAdapter;
 
     private StepsViewModel mStepsViewModel;
+
+
+    private SharedViewModel<Step> mStepSelectorViewModel;
+
     private StepsAdapter mStepsAdapter;
 
-    public interface OnStepClickListener {
-        void onStepClick (Step step);
-    }
 
     private Unbinder mUnbinder;
 
@@ -67,10 +70,13 @@ public class StepListFragment extends LifecycleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupViewModels();
+
+
         mIngredientsViewModel.getIngredientsByRecipe().observe(this, ingredients -> {
             Log.d(TAG, "onActivityCreated: "+ingredients);
             mIngredientsAdapter.swapItemList(ingredients);
         });
+
         mStepsViewModel.getStepsByRecipe().observe(this, steps -> {
             Log.d(TAG, "onActivityCreated: "+steps);
             mStepsAdapter.swapItemList(steps);
@@ -93,6 +99,8 @@ public class StepListFragment extends LifecycleFragment {
     }
 
     private void setupViewModels() {
+        mStepSelectorViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+
         BakingAppDatabase database =
                 Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
         mIngredientsViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
@@ -146,23 +154,18 @@ public class StepListFragment extends LifecycleFragment {
 
     private View.OnClickListener onStepClick = view -> {
         Step step = (Step) view.getTag();
-        mOnStepClickListener.onStepClick(step);
+        mStepSelectorViewModel.select(step);
+        Log.d(TAG, "onStepClick: ");
+        EventBus.getDefault().post(new Object());
+
     };
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnStepClickListener){
-            mOnStepClickListener = (OnStepClickListener) context;
-        }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mOnStepClickListener = null;
-    }
 
     public static StepListFragment newInstance(String recipeId) {
         Bundle args = new Bundle();

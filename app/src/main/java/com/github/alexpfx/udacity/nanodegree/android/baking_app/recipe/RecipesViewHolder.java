@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.list;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.content.Context;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseViewHolder;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseViewHolder;
 
 import butterknife.BindView;
 
