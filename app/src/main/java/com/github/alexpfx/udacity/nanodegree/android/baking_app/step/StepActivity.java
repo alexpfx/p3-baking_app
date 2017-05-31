@@ -12,11 +12,11 @@ import android.widget.Toast;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 
-public class RecipeDetailActivity extends AppCompatActivity implements StepIngredientsFragment.OnStepClickListener {
+public class StepActivity extends AppCompatActivity implements StepIngredientsFragment.OnStepClickListener {
 
     public static final String KEY_RECIPE_ID = "RECIPE_ID";
 
-    private static final String TAG = "RecipeDetailActivity";
+    private static final String TAG = "StepActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

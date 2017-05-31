@@ -1,9 +1,9 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.ingredients;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseViewModel;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
 
 import java.util.List;

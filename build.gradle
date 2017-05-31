@@ -47,6 +47,8 @@ ext{
     rxJavaVersion = "2.1.0"
     constraintLayoutVersion = "1.0.2"
 
+    eventBusVersion = '3.0.0'
+
     //
 
 

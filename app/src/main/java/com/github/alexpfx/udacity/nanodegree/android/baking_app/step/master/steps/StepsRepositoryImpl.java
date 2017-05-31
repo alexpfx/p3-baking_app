@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.steps;
 
 import android.arch.lifecycle.LiveData;
 

@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.steps;
 
 
 import android.arch.lifecycle.LifecycleFragment;
@@ -19,29 +19,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseApplication;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.ingredients.IngredientsAdapter;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.ingredients.IngredientsRepositoryImpl;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.ingredients.IngredientsViewModel;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps.StepsAdapter;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps.StepsRepositoryImpl;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps.StepsViewModel;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.StepActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients.IngredientsAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients.IngredientsRepositoryImpl;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.ingredients.IngredientsViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.RecipeDetailActivity.KEY_RECIPE_ID;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StepIngredientsFragment extends LifecycleFragment {
+public class StepListFragment extends LifecycleFragment {
 
-    private static final String TAG = "StepIngredientsFragment";
+    private static final String TAG = "StepListFragment";
 
     @BindView(R.id.recycler_ingredients)
     RecyclerView mRecyclerIngredients;
@@ -62,7 +58,7 @@ public class StepIngredientsFragment extends LifecycleFragment {
     private Unbinder mUnbinder;
 
 
-    public StepIngredientsFragment() {
+    public StepListFragment() {
         // Required empty public constructor
     }
 
@@ -123,7 +119,7 @@ public class StepIngredientsFragment extends LifecycleFragment {
     }
 
     private String getRecipeId() {
-        return getArguments().getString(KEY_RECIPE_ID);
+        return getArguments().getString(StepActivity.KEY_RECIPE_ID);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter) {
@@ -168,12 +164,12 @@ public class StepIngredientsFragment extends LifecycleFragment {
         mOnStepClickListener = null;
     }
 
-    public static StepIngredientsFragment newInstance(String recipeId) {
+    public static StepListFragment newInstance(String recipeId) {
         Bundle args = new Bundle();
-        args.putString(KEY_RECIPE_ID, recipeId);
-        StepIngredientsFragment stepIngredientsFragment = new StepIngredientsFragment();
-        stepIngredientsFragment.setArguments(args);
-        return stepIngredientsFragment;
+        args.putString(StepActivity.KEY_RECIPE_ID, recipeId);
+        StepListFragment stepListFragment = new StepListFragment();
+        stepListFragment.setArguments(args);
+        return stepListFragment;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.detail.steps;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.list.steps;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.BaseAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseAdapter;
 
 /**
  * Created by alexandre on 28/05/2017.
