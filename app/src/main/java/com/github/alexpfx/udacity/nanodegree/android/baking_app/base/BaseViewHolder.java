@@ -34,4 +34,6 @@ public abstract class BaseViewHolder <T> extends RecyclerView.ViewHolder {
         return mContext;
     }
 
+
+
 }

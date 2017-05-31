@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +40,13 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
     }
 
 
+
+    // just to set the correct argument names.
+    @Override
+    public abstract VH onCreateViewHolder(ViewGroup viewGroup, int viewType);
+
+    @Override
+    public abstract void onBindViewHolder(VH holder, int position);
 
 
 }
