@@ -20,8 +20,7 @@ public class IngredientsViewModel extends BaseViewModel<IngredientsRepository, I
         super(repository);
     }
 
-    @Override
-    public final void initialize(@NonNull Integer... recipeId) {
+    public final void loadAllByRecipeId(@NonNull Integer... recipeId) {
         ingredientsByRecipe = getRepository().getAllByRecipeId(recipeId[0]);
     }
 

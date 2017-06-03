@@ -23,4 +23,9 @@ public class StepsRepositoryImpl implements StepsRepository {
     public LiveData<List<Step>> getAllByRecipe (Integer recipeId){
         return mStepDao.getAllByRecipe(recipeId);
     }
+
+    @Override
+    public LiveData<Step> get(Integer id) {
+        return mStepDao.getById(id);
+    }
 }

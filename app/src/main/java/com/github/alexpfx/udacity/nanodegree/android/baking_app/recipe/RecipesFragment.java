@@ -68,7 +68,7 @@ public class RecipesFragment extends LifecycleFragment {
             @Override
             public <T extends ViewModel> T create(Class<T> modelClass) {
                 RecipesViewModel viewModel = new RecipesViewModel(new RecipesRepositoryImpl(database.recipeDao()));
-                viewModel.initialize();
+                viewModel.loadAll();
                 return (T) viewModel;
             }
         }).get(RecipesViewModel.class);

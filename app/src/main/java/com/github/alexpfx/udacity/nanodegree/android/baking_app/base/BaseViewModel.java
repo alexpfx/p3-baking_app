@@ -18,7 +18,6 @@ public abstract class BaseViewModel<T, P> extends ViewModel {
         return mRepository;
     }
 
-    protected abstract void initialize (P ... params);
 
 
 }

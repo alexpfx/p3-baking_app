@@ -108,7 +108,7 @@ public class StepListFragment extends LifecycleFragment {
             public <T extends ViewModel> T create(Class<T> modelClass) {
                 IngredientsViewModel vm = new IngredientsViewModel(new IngredientsRepositoryImpl(database.ingredientDao()));
                 String id = getRecipeId();
-                vm.initialize(Integer.valueOf(id));
+                vm.loadAllByRecipeId(Integer.valueOf(id));
                 Toast.makeText(getContext(), "id (id): "+id, Toast.LENGTH_SHORT).show();
                 return (T) vm;
             }
@@ -119,7 +119,7 @@ public class StepListFragment extends LifecycleFragment {
             public <T extends ViewModel> T create(Class<T> modelClass) {
                 StepsViewModel vm = new StepsViewModel(new StepsRepositoryImpl(database.stepDao()));
                 String recipeId = getRecipeId();
-                vm.initialize(Integer.valueOf(recipeId));
+                vm.loadAllByRecipeId(Integer.valueOf(recipeId));
                 return (T) vm;
             }
         }).get(StepsViewModel.class);
@@ -155,7 +155,7 @@ public class StepListFragment extends LifecycleFragment {
     private View.OnClickListener onStepClick = view -> {
         Step step = (Step) view.getTag();
         mStepSelectorViewModel.select(step);
-        Log.d(TAG, "onStepClick: ");
+        Log.d(TAG, "onStepClick: "+step);
         EventBus.getDefault().post(new Object());
 
     };

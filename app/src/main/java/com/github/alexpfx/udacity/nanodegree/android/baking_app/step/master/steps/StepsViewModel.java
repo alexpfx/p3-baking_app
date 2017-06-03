@@ -15,18 +15,25 @@ import java.util.List;
 public class StepsViewModel extends BaseViewModel<StepsRepository, Integer> {
 
     private LiveData<List<Step>> stepsByRecipe;
+    private LiveData<Step> step;
 
     public StepsViewModel(@NonNull StepsRepository repository) {
         super(repository);
     }
 
-
-    @Override
-    public void initialize(Integer... params) {
-        if (stepsByRecipe != null){
+    public void loadAllByRecipeId(Integer... params) {
+        if (stepsByRecipe != null) {
             return;
         }
         stepsByRecipe = getRepository().getAllByRecipe(params[0]);
+    }
+
+    public void load (Integer id){
+        step = getRepository().get (id);
+    }
+
+    public LiveData<Step> getStep() {
+        return step;
     }
 
     public LiveData<List<Step>> getStepsByRecipe() {

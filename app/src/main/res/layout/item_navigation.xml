@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:background="#abc">
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="navigation"
-        android:layout_height="wrap_content"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+    >
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="left"
+        android:padding="@dimen/fab_margin"
+        android:src="@drawable/ic_navigate_before_black_24dp"
+        android:background="@null"
+        />
+
+    <TextView
+        android:id="@+id/text_short_description"
+        android:layout_toRightOf="@+id/btn_previous"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btn_next"
+        android:layout_alignBottom="@+id/btn_previous"
+        android:layout_alignTop="@+id/btn_previous"
+        tools:text="descrição da receita"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+
+
+        />
+
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_navigate_next_black_24dp"
+        android:background="@null"
+        android:padding="@dimen/fab_margin"
+        />
+
+
+</RelativeLayout>

@@ -18,8 +18,7 @@ public class RecipesViewModel extends BaseViewModel<RecipesRepository, Void> {
         super(repository);
     }
 
-    @Override
-    protected final void initialize(Void ... params) {
+    public final void loadAll() {
         if (recipes != null){
             return;
         }

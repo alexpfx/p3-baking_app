@@ -69,7 +69,8 @@ dependencies {
 
     compile 'org.greenrobot:eventbus:' + eventBusVersion
 
+    compile 'com.google.android.exoplayer:exoplayer-core:'+exoPlayerVersion
+    compile 'com.google.android.exoplayer:exoplayer-dash:'+exoPlayerVersion
+    compile 'com.google.android.exoplayer:exoplayer-ui:'+exoPlayerVersion
 
-
-    compile 'com.android.support:support-v4:25.3.1'
 }
