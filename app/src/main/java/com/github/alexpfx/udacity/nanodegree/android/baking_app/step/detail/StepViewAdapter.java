@@ -23,10 +23,9 @@ import java.lang.annotation.RetentionPolicy;
 public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> {
 
 
-    public static final int PLAYER = 0;
-    public static final int STEP = 1;
-    public static final int NAVIGATION = 2;
-    public static final int PLAYER_VIEW_WEIGHT = 3;
+    public static final int NAVIGATION = 0;
+    public static final int PLAYER = 1;
+    public static final int STEP = 2;
     private Context mContext;
     private View.OnClickListener previousButtonClickListener;
     private View.OnClickListener nextButtonClickListener;
@@ -49,6 +48,7 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
 
     @Override
     public BaseViewHolder<Step> onCreateViewHolder(ViewGroup viewGroup, @ViewTypes int viewType) {
+        Log.d(TAG, "onCreateViewHolder: "+viewGroup.getMeasuredHeight());
         return chooseViewHolder.choose(viewType, viewGroup);
     }
 
@@ -74,7 +74,8 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
 
     Chooser<Integer, ViewGroup, BaseViewHolder<Step>> chooseViewHolder = (viewType, viewGroup) -> {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        Log.d(TAG, "viewtype: " + viewType);
+
+
         switch (viewType) {
             case PLAYER:
                 return inflatePlayer(layoutInflater, viewGroup);
@@ -89,29 +90,21 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
 
 
     private PlayerViewHolder inflatePlayer(LayoutInflater inflater, ViewGroup viewGroup) {
-        Log.d(TAG, "inflatePlayer: "+viewGroup);
         View view = inflater.inflate(R.layout.item_player, viewGroup, false);
-        int height = viewGroup.getMeasuredHeight() / 2;
-        int width = viewGroup.getMeasuredWidth();
-        int h = viewGroup.getLayoutParams().height;
-
-        view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+//        view.setLayoutParams(new RecyclerView.LayoutParams(width, 5 * height / 10));
         return new PlayerViewHolder(view, mContext);
     }
 
     private StepDetailViewHolder inflateStep(LayoutInflater inflater, ViewGroup viewGroup) {
-        View view = inflater.inflate(R.layout.item_detail_step, viewGroup, false);
-        int height = viewGroup.getMeasuredHeight() / 2;
-        int width = viewGroup.getMeasuredWidth();
-        view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+        final View view = inflater.inflate(R.layout.item_detail_step, viewGroup, false);
+//        view.setLayoutParams(new RecyclerView.LayoutParams(width, 4 * height / 10));
+
         return new StepDetailViewHolder(view, mContext);
     }
 
     private NavigationViewHolder inflateNavigation(LayoutInflater inflater, ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.item_navigation, viewGroup, false);
-        int height = viewGroup.getMeasuredHeight() / 2;
-        int width = viewGroup.getMeasuredWidth();
-        view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+//        view.setLayoutParams(new RecyclerView.LayoutParams(width, 1 * height / 10));
         return new NavigationViewHolder(view, mContext, previousButtonClickListener, nextButtonClickListener);
     }
 

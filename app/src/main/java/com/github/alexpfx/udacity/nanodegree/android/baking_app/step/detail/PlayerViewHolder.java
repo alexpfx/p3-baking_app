@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.detail;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
@@ -46,9 +47,13 @@ public class PlayerViewHolder extends BaseViewHolder<Step> {
     private static final String TAG = "PlayerViewHolder";
     @Override
     public void bind(Step step) {
-        if (step.getVideoURL() == null){
+        Log.d(TAG, "bind: "+step.getVideoURL());
+        if (step.getVideoURL() == null || step.getVideoURL().isEmpty()){
+            mSimpleExoPlayerView.setVisibility(View.GONE);
             return;
         }
+        mSimpleExoPlayerView.setVisibility(View.VISIBLE);
+
         String videoURL = step.getVideoURL();
         MediaSource mediaSource = new ExtractorMediaSource(
                 Uri.parse(videoURL),

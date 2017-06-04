@@ -44,13 +44,13 @@ public class StepViewFragment extends LifecycleFragment {
     private StepsViewModel mStepsViewModel;
     private StepViewAdapter mAdapter;
     private SharedViewModel<Step> mSharedViewModel;
+
+
     private View.OnClickListener previousButtonClickListener = v -> {
         Step step = mSharedViewModel.getSelected().getValue();
         int id = step.getId();
         int recipeId = step.getRecipeId();
         offsetStep(id, recipeId, -1);
-
-
     };
 
 
@@ -64,7 +64,9 @@ public class StepViewFragment extends LifecycleFragment {
     private void offsetStep(int actualId, int recipeId, int offset) {
         mStepsViewModel.load(actualId + offset, recipeId);
         mStepsViewModel.getStep().observe(this, step -> {
-            if (step == null) return;
+            if (step == null) {
+
+            }
 
             mSharedViewModel.select(step);
             mAdapter.setStep(step);
@@ -113,8 +115,8 @@ public class StepViewFragment extends LifecycleFragment {
     }
 
     private void setupRecyclerView() {
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
         mAdapter = new StepViewAdapter(getContext(), previousButtonClickListener, nextButtonClickListener);
 
         mRecyclerStepView.setAdapter(mAdapter);
@@ -122,8 +124,10 @@ public class StepViewFragment extends LifecycleFragment {
         final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
                 layoutManager.getOrientation());
 
-        mRecyclerStepView.addItemDecoration(dividerItemDecoration);
+
+//        mRecyclerStepView.addItemDecoration(dividerItemDecoration);
         mRecyclerStepView.setLayoutManager(layoutManager);
+        mRecyclerStepView.setHasFixedSize(true);
 
 
     }

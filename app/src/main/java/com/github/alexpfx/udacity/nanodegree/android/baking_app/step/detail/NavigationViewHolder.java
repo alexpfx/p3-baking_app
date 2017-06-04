@@ -40,6 +40,7 @@ public class NavigationViewHolder extends BaseViewHolder<Step> {
 
     @Override
     public void bind(Step step) {
+
         textShortDescription.setText(step.getShortDescription());
     }
 
