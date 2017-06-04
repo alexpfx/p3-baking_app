@@ -36,15 +36,45 @@ public class StepViewFragment extends LifecycleFragment {
 
     private static final String TAG = "StepViewFragment";
 
+    Unbinder unbinder;
+
     @BindView(R.id.recycler_step_view)
     RecyclerView mRecyclerStepView;
 
-    Unbinder unbinder;
     private StepsViewModel mStepsViewModel;
     private StepViewAdapter mAdapter;
+    private SharedViewModel<Step> mSharedViewModel;
+    private View.OnClickListener previousButtonClickListener = v -> {
+        Step step = mSharedViewModel.getSelected().getValue();
+        int id = step.getId();
+        int recipeId = step.getRecipeId();
+        offsetStep(id, recipeId, -1);
+
+
+    };
+
+
+    private View.OnClickListener nextButtonClickListener = v -> {
+        Step step = mSharedViewModel.getSelected().getValue();
+        int id = step.getId();
+        int recipeId = step.getRecipeId();
+        offsetStep(id, recipeId, 1);
+    };
+
+    private void offsetStep(int actualId, int recipeId, int offset) {
+        mStepsViewModel.load(actualId + offset, recipeId);
+        mStepsViewModel.getStep().observe(this, step -> {
+            if (step == null) return;
+
+            mSharedViewModel.select(step);
+            mAdapter.setStep(step);
+
+        });
+
+    }
 
     public StepViewFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -61,10 +91,9 @@ public class StepViewFragment extends LifecycleFragment {
             }
         }).get(StepsViewModel.class);
 
-        SharedViewModel<Step> sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        mSharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
 
-        sharedViewModel.getSelected().observe(this, step -> {
-            mStepsViewModel.load(step.getId());
+        mSharedViewModel.getSelected().observe(this, step -> {
             mAdapter.setStep(step);
         });
     }
@@ -86,7 +115,7 @@ public class StepViewFragment extends LifecycleFragment {
     private void setupRecyclerView() {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mAdapter = new StepViewAdapter(getContext());
+        mAdapter = new StepViewAdapter(getContext(), previousButtonClickListener, nextButtonClickListener);
 
         mRecyclerStepView.setAdapter(mAdapter);
 

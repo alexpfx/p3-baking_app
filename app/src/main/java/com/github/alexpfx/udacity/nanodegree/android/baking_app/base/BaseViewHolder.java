@@ -25,13 +25,17 @@ public abstract class BaseViewHolder <T> extends RecyclerView.ViewHolder {
     }
 
     //TODO: remover. classe pai nao deve ter itens tao especificos.
-    public void setOnClickListener (View.OnClickListener onClickListener, Object tag){
-        itemView.setOnClickListener(onClickListener);
-        itemView.setTag(tag);
-    }
+//    public void setOnClickListener (View.OnClickListener onClickListener, Object tag){
+//        itemView.setOnClickListener(onClickListener);
+//        itemView.setTag(tag);
+//    }
 
 
     public abstract void bind (T object);
+
+    public void setTag (Object tag){
+        itemView.setTag(tag);
+    }
 
     protected Context getContext() {
         return mContext;

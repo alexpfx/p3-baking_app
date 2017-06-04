@@ -5,6 +5,7 @@ import android.support.annotation.IntDef;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
@@ -25,7 +26,10 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
     public static final int PLAYER = 0;
     public static final int STEP = 1;
     public static final int NAVIGATION = 2;
+    public static final int PLAYER_VIEW_WEIGHT = 3;
     private Context mContext;
+    private View.OnClickListener previousButtonClickListener;
+    private View.OnClickListener nextButtonClickListener;
 
 
     @Retention(RetentionPolicy.SOURCE)
@@ -35,8 +39,12 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
 
     private Step mStep;
 
-    protected StepViewAdapter(Context context) {
+    protected StepViewAdapter(Context context, View.OnClickListener previousButtonClickListener, View.OnClickListener nextButtonClickListener) {
         mContext = context;
+        this.previousButtonClickListener = previousButtonClickListener;
+
+
+        this.nextButtonClickListener = nextButtonClickListener;
     }
 
     @Override
@@ -81,15 +89,30 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
 
 
     private PlayerViewHolder inflatePlayer(LayoutInflater inflater, ViewGroup viewGroup) {
-        return new PlayerViewHolder(inflater.inflate(R.layout.item_player, viewGroup, false), mContext);
+        Log.d(TAG, "inflatePlayer: "+viewGroup);
+        View view = inflater.inflate(R.layout.item_player, viewGroup, false);
+        int height = viewGroup.getMeasuredHeight() / 2;
+        int width = viewGroup.getMeasuredWidth();
+        int h = viewGroup.getLayoutParams().height;
+
+        view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+        return new PlayerViewHolder(view, mContext);
     }
 
     private StepDetailViewHolder inflateStep(LayoutInflater inflater, ViewGroup viewGroup) {
-        return new StepDetailViewHolder(inflater.inflate(R.layout.item_detail_step, viewGroup, false), mContext);
+        View view = inflater.inflate(R.layout.item_detail_step, viewGroup, false);
+        int height = viewGroup.getMeasuredHeight() / 2;
+        int width = viewGroup.getMeasuredWidth();
+        view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+        return new StepDetailViewHolder(view, mContext);
     }
 
     private NavigationViewHolder inflateNavigation(LayoutInflater inflater, ViewGroup viewGroup) {
-        return new NavigationViewHolder(inflater.inflate(R.layout.item_navigation, viewGroup, false), mContext);
+        View view = inflater.inflate(R.layout.item_navigation, viewGroup, false);
+        int height = viewGroup.getMeasuredHeight() / 2;
+        int width = viewGroup.getMeasuredWidth();
+        view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+        return new NavigationViewHolder(view, mContext, previousButtonClickListener, nextButtonClickListener);
     }
 
 
@@ -100,6 +123,7 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
 
     public void setStep(Step step) {
         mStep = step;
+        notifyDataSetChanged();
     }
 
 

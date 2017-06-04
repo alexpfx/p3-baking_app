@@ -26,6 +26,7 @@ public class RecipesAdapter extends BaseAdapter<Recipe, RecipesViewHolder> {
     @Override
     public RecipesViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recipe, viewGroup, false);
+        view.setOnClickListener(mOnClickListener);
         return new RecipesViewHolder(view, getContext());
     }
 
@@ -33,7 +34,6 @@ public class RecipesAdapter extends BaseAdapter<Recipe, RecipesViewHolder> {
     @Override
     public void onBindViewHolder(RecipesViewHolder holder, int position) {
         Recipe recipe = getItemAt(position);
-        holder.setOnClickListener(mOnClickListener, recipe);
         holder.bind(recipe);
     }
 

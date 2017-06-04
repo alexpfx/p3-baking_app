@@ -31,6 +31,7 @@ public class RecipesViewHolder extends BaseViewHolder<Recipe> {
 
     @Override
     public void bind(Recipe recipe) {
+        setTag(recipe);
         String name = recipe.getName();
         textRecipeName.setText(name);
         View rootView = textRecipeName.getRootView();

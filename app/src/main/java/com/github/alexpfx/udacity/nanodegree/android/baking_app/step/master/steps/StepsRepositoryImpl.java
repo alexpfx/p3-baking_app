@@ -25,7 +25,7 @@ public class StepsRepositoryImpl implements StepsRepository {
     }
 
     @Override
-    public LiveData<Step> get(Integer id) {
-        return mStepDao.getById(id);
+    public LiveData<Step> get(int stepId, int recipeId) {
+        return mStepDao.get(stepId, recipeId);
     }
 }

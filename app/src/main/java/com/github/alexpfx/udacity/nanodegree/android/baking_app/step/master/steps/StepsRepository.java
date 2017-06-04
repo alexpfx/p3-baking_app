@@ -13,5 +13,5 @@ import java.util.List;
 interface StepsRepository {
     LiveData<List<Step>> getAllByRecipe(Integer recipeId);
 
-    LiveData<Step> get(Integer id);
+    LiveData<Step> get(int id, int recipeId);
 }

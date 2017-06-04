@@ -26,15 +26,19 @@ public class StepsViewHolder extends BaseViewHolder<Step> {
     @BindView(R.id.image_has_video)
     ImageView mImageAsVideo;
 
-    public StepsViewHolder(View view) {
-        super(view);
+    private View.OnClickListener mOnClickListener;
 
+    public StepsViewHolder(View view, View.OnClickListener onClickListener) {
+        super(view);
+        mOnClickListener = onClickListener;
     }
 
     private static final String TAG = "StepsViewHolder";
 
     @Override
     public void bind(Step step) {
+        setTag(step);
+        
         String videoURL = step.getVideoURL();
         Log.d(TAG, "bind: getVideoURL"+ videoURL);
         if (videoURL != null && !videoURL.isEmpty()){

@@ -28,8 +28,8 @@ public class StepsViewModel extends BaseViewModel<StepsRepository, Integer> {
         stepsByRecipe = getRepository().getAllByRecipe(params[0]);
     }
 
-    public void load (Integer id){
-        step = getRepository().get (id);
+    public void load (int id, int recipeId){
+        step = getRepository().get (id, recipeId);
     }
 
     public LiveData<Step> getStep() {

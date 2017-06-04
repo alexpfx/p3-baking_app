@@ -24,13 +24,13 @@ public class StepsAdapter extends BaseAdapter<Step, StepsViewHolder> {
     @Override
     public StepsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_step, viewGroup, false);
-        return new StepsViewHolder(view);
+        view.setOnClickListener(mOnClickListener);
+        return new StepsViewHolder(view, mOnClickListener);
     }
 
     @Override
     public void onBindViewHolder(StepsViewHolder holder, int position) {
         Step step = getItemAt(position);
-        holder.setOnClickListener(mOnClickListener, step);
         holder.bind(step);
     }
 }
