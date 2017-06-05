@@ -16,7 +16,7 @@ import butterknife.BindView;
  * Created by alexandre on 25/05/2017.
  */
 
-public class RecipesViewHolder extends BaseViewHolder<Recipe> {
+public class RecipesViewHolder extends BaseViewHolder {
 
     @BindView(R.id.image_background)
     ImageView imageBackground;
@@ -29,7 +29,6 @@ public class RecipesViewHolder extends BaseViewHolder<Recipe> {
     }
 
 
-    @Override
     public void bind(Recipe recipe) {
         setTag(recipe);
         String name = recipe.getName();

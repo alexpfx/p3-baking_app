@@ -15,11 +15,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.IdsTO;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps.StepsRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps.StepsViewModel;
@@ -39,6 +41,10 @@ public class StepViewFragment extends LifecycleFragment {
     Unbinder unbinder;
 
     @BindView(R.id.recycler_step_view)
+
+
+
+
     RecyclerView mRecyclerStepView;
 
     private StepsViewModel mStepsViewModel;
@@ -46,33 +52,25 @@ public class StepViewFragment extends LifecycleFragment {
     private SharedViewModel<Step> mSharedViewModel;
 
 
-    private View.OnClickListener previousButtonClickListener = v -> {
-        Step step = mSharedViewModel.getSelected().getValue();
-        int id = step.getId();
-        int recipeId = step.getRecipeId();
-        offsetStep(id, recipeId, -1);
+    private View.OnClickListener btnClickListener = v -> {
+        IdsTO idsTO = (IdsTO) v.getTag();
+        load(idsTO.getId(), idsTO.getRecipeId());
     };
 
+    private StepsRepositoryImpl mRepository;
 
-    private View.OnClickListener nextButtonClickListener = v -> {
-        Step step = mSharedViewModel.getSelected().getValue();
-        int id = step.getId();
-        int recipeId = step.getRecipeId();
-        offsetStep(id, recipeId, 1);
-    };
 
-    private void offsetStep(int actualId, int recipeId, int offset) {
-        mStepsViewModel.load(actualId + offset, recipeId);
-        mStepsViewModel.getStep().observe(this, step -> {
-            if (step == null) {
+    private void load(int id, int recipeId) {
+        mStepsViewModel.load(id, recipeId);
 
+        mStepsViewModel.getStep().observe(this, step ->{
+            if (step == null){
+                Toast.makeText(getContext(), "The step doesn't exist!", Toast.LENGTH_SHORT).show();
+                return;
             }
-
             mSharedViewModel.select(step);
-            mAdapter.setStep(step);
-
+            mAdapter.setData(step);
         });
-
     }
 
     public StepViewFragment() {
@@ -85,18 +83,20 @@ public class StepViewFragment extends LifecycleFragment {
         super.onActivityCreated(savedInstanceState);
         BakingAppDatabase database =
                 Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
+        mRepository = new StepsRepositoryImpl(database.stepDao());
+
 
         mStepsViewModel = ViewModelProviders.of(getActivity(), new ViewModelProvider.Factory() {
             @Override
             public <T extends ViewModel> T create(Class<T> modelClass) {
-                return (T) new StepsViewModel(new StepsRepositoryImpl(database.stepDao()));
+                return (T) new StepsViewModel(mRepository);
             }
         }).get(StepsViewModel.class);
 
         mSharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
 
         mSharedViewModel.getSelected().observe(this, step -> {
-            mAdapter.setStep(step);
+            mAdapter.setData(step);
         });
     }
 
@@ -117,7 +117,7 @@ public class StepViewFragment extends LifecycleFragment {
     private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
-        mAdapter = new StepViewAdapter(getContext(), previousButtonClickListener, nextButtonClickListener);
+        mAdapter = new StepViewAdapter(getContext(), btnClickListener, btnClickListener);
 
         mRecyclerStepView.setAdapter(mAdapter);
 

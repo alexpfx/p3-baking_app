@@ -15,7 +15,7 @@ import butterknife.BindView;
  * Created by alexandre on 27/05/2017.
  */
 
-public class StepsViewHolder extends BaseViewHolder<Step> {
+public class StepsViewHolder extends BaseViewHolder {
 
     @BindView(R.id.text_step_short_description)
     TextView textStepShortDescription;
@@ -35,7 +35,6 @@ public class StepsViewHolder extends BaseViewHolder<Step> {
 
     private static final String TAG = "StepsViewHolder";
 
-    @Override
     public void bind(Step step) {
         setTag(step);
         

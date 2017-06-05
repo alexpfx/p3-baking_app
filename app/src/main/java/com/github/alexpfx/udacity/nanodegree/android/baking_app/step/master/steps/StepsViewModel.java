@@ -17,6 +17,7 @@ public class StepsViewModel extends BaseViewModel<StepsRepository, Integer> {
     private LiveData<List<Step>> stepsByRecipe;
     private LiveData<Step> step;
 
+
     public StepsViewModel(@NonNull StepsRepository repository) {
         super(repository);
     }
@@ -26,6 +27,7 @@ public class StepsViewModel extends BaseViewModel<StepsRepository, Integer> {
             return;
         }
         stepsByRecipe = getRepository().getAllByRecipe(params[0]);
+
     }
 
     public void load (int id, int recipeId){

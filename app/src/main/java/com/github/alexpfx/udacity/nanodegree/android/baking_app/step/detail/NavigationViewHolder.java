@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseViewHolder;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.IdsTO;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 
 import butterknife.BindView;
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by alexandre on 30/05/2017.
  */
 
-public class NavigationViewHolder extends BaseViewHolder<Step> {
+public class NavigationViewHolder extends BaseViewHolder {
     private static final String TAG = "NavigationViewHolder";
 
     @BindView(R.id.btn_previous)
@@ -38,8 +39,12 @@ public class NavigationViewHolder extends BaseViewHolder<Step> {
 
     }
 
-    @Override
     public void bind(Step step) {
+        int stepId = step.getId();
+        int recipeId = step.getRecipeId();
+
+        btnNext.setTag(new IdsTO(stepId + 1, recipeId));
+        btnPrevious.setTag(new IdsTO(stepId - 1, recipeId));
 
         textShortDescription.setText(step.getShortDescription());
     }

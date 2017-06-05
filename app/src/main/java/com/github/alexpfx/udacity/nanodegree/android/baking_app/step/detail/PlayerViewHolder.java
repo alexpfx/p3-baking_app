@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by alexandre on 30/05/2017.
  */
 
-public class PlayerViewHolder extends BaseViewHolder<Step> {
+public class PlayerViewHolder extends BaseViewHolder {
 
     @BindView(R.id.video_player_view)
     SimpleExoPlayerView mSimpleExoPlayerView;
@@ -45,7 +45,8 @@ public class PlayerViewHolder extends BaseViewHolder<Step> {
     }
 
     private static final String TAG = "PlayerViewHolder";
-    @Override
+
+
     public void bind(Step step) {
         Log.d(TAG, "bind: "+step.getVideoURL());
         if (step.getVideoURL() == null || step.getVideoURL().isEmpty()){

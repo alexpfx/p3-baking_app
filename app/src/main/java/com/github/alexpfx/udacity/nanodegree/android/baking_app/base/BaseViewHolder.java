@@ -10,7 +10,7 @@ import butterknife.ButterKnife;
  * Created by alexandre on 28/05/2017.
  */
 
-public abstract class BaseViewHolder <T> extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
     private Context mContext;
 
@@ -23,15 +23,6 @@ public abstract class BaseViewHolder <T> extends RecyclerView.ViewHolder {
         this(view);
         this.mContext = context;
     }
-
-    //TODO: remover. classe pai nao deve ter itens tao especificos.
-//    public void setOnClickListener (View.OnClickListener onClickListener, Object tag){
-//        itemView.setOnClickListener(onClickListener);
-//        itemView.setTag(tag);
-//    }
-
-
-    public abstract void bind (T object);
 
     public void setTag (Object tag){
         itemView.setTag(tag);

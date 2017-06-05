@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by alexandre on 30/05/2017.
  */
 
-public class StepDetailViewHolder extends BaseViewHolder<Step> {
+public class StepDetailViewHolder extends BaseViewHolder {
 
     @BindView(R.id.text_step_description)
     TextView mTextStepDescription;
@@ -25,7 +25,6 @@ public class StepDetailViewHolder extends BaseViewHolder<Step> {
         ButterKnife.bind(this, view);
     }
 
-    @Override
     public void bind(Step step) {
         mTextStepDescription.setText(step.getDescription());
     }

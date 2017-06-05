@@ -13,7 +13,7 @@ import butterknife.BindView;
  * Created by alexandre on 27/05/2017.
  */
 
-public class IngredientsViewHolder extends BaseViewHolder<Ingredient> {
+public class IngredientsViewHolder extends BaseViewHolder {
 
 
     @BindView(R.id.text_ingredient)
@@ -23,7 +23,6 @@ public class IngredientsViewHolder extends BaseViewHolder<Ingredient> {
         super(view);
     }
 
-    @Override
     public void bind(Ingredient ingredient) {
         double quantity = ingredient.getQuantity();
         String text = getFormatedText(ingredient, quantity);

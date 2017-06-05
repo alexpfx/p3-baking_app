@@ -3,13 +3,11 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.detail;
 import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseViewHolder;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 
 import java.lang.annotation.Retention;
@@ -20,7 +18,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 
-public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> {
+public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public static final int NAVIGATION = 0;
@@ -46,12 +44,6 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
         this.nextButtonClickListener = nextButtonClickListener;
     }
 
-    @Override
-    public BaseViewHolder<Step> onCreateViewHolder(ViewGroup viewGroup, @ViewTypes int viewType) {
-        Log.d(TAG, "onCreateViewHolder: "+viewGroup.getMeasuredHeight());
-        return chooseViewHolder.choose(viewType, viewGroup);
-    }
-
     private static final String TAG = "StepViewAdapter";
 
     @Override
@@ -65,59 +57,57 @@ public class StepViewAdapter extends RecyclerView.Adapter<BaseViewHolder<Step>> 
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder<Step> holder, int position) {
-        Log.d(TAG, "onBindViewHolder: " + position);
-        holder.bind(mStep);
-
-    }
-
-
-    Chooser<Integer, ViewGroup, BaseViewHolder<Step>> chooseViewHolder = (viewType, viewGroup) -> {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-
-
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, @ViewTypes int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         switch (viewType) {
             case PLAYER:
-                return inflatePlayer(layoutInflater, viewGroup);
+                return inflatePlayer(inflater, viewGroup);
             case STEP:
-                return inflateStep(layoutInflater, viewGroup);
+                return inflateStep(inflater, viewGroup);
             case NAVIGATION:
-                return inflateNavigation(layoutInflater, viewGroup);
+                return inflateNavigation(inflater, viewGroup);
             default:
                 throw new RuntimeException("not a valid view!");
         }
-    };
+
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (getItemViewType(position)) {
+            case PLAYER:
+                ((PlayerViewHolder) holder).bind(mStep);
+                break;
+            case STEP:
+                ((StepDetailViewHolder) holder).bind(mStep);
+                break;
+            case NAVIGATION:
+                ((NavigationViewHolder) holder).bind(mStep);
+                break;
+        }
+    }
 
 
     private PlayerViewHolder inflatePlayer(LayoutInflater inflater, ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.item_player, viewGroup, false);
-//        view.setLayoutParams(new RecyclerView.LayoutParams(width, 5 * height / 10));
         return new PlayerViewHolder(view, mContext);
     }
 
     private StepDetailViewHolder inflateStep(LayoutInflater inflater, ViewGroup viewGroup) {
         final View view = inflater.inflate(R.layout.item_detail_step, viewGroup, false);
-//        view.setLayoutParams(new RecyclerView.LayoutParams(width, 4 * height / 10));
-
         return new StepDetailViewHolder(view, mContext);
     }
 
     private NavigationViewHolder inflateNavigation(LayoutInflater inflater, ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.item_navigation, viewGroup, false);
-//        view.setLayoutParams(new RecyclerView.LayoutParams(width, 1 * height / 10));
         return new NavigationViewHolder(view, mContext, previousButtonClickListener, nextButtonClickListener);
     }
 
-
-    @FunctionalInterface
-    interface Chooser<I, J, R> {
-        R choose(I input, J input2);
-    }
-
-    public void setStep(Step step) {
+    public void setData(Step step) {
         mStep = step;
         notifyDataSetChanged();
     }
+
 
 
 }
