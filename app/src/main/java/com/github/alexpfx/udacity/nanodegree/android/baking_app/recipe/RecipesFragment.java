@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
@@ -37,15 +38,12 @@ public class RecipesFragment extends LifecycleFragment {
     RecyclerView recyclerRecipes;
 
     private RecipesAdapter adapterRecipes;
-    private View.OnClickListener onItemClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Recipe r = (Recipe) v.getTag();
-            Intent intent = new Intent(getContext(), StepActivity.class);
-            intent.putExtra(StepActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
-            startActivity(intent);
-        }
+    private AdapterCallback<Recipe> mAdapterCallback = r -> {
+        Intent intent = new Intent(getContext(), StepActivity.class);
+        intent.putExtra(StepActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
+        startActivity(intent);
     };
+
     private RecipesViewModel mViewModel;
 
     public RecipesFragment() {
@@ -86,7 +84,7 @@ public class RecipesFragment extends LifecycleFragment {
     }
 
     private void setupRecycler() {
-        adapterRecipes = new RecipesAdapter(getContext(), onItemClick);
+        adapterRecipes = new RecipesAdapter(getContext(), mAdapterCallback);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerRecipes.setLayoutManager(layoutManager);

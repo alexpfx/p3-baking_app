@@ -26,18 +26,15 @@ public class StepsViewHolder extends BaseViewHolder {
     @BindView(R.id.image_has_video)
     ImageView mImageAsVideo;
 
-    private View.OnClickListener mOnClickListener;
 
-    public StepsViewHolder(View view, View.OnClickListener onClickListener) {
+    public StepsViewHolder(View view) {
         super(view);
-        mOnClickListener = onClickListener;
     }
 
     private static final String TAG = "StepsViewHolder";
 
     public void bind(Step step) {
-        setTag(step);
-        
+        itemView.setTag(step);
         String videoURL = step.getVideoURL();
         Log.d(TAG, "bind: getVideoURL"+ videoURL);
         if (videoURL != null && !videoURL.isEmpty()){
@@ -48,5 +45,6 @@ public class StepsViewHolder extends BaseViewHolder {
 
         textStepDescription.setText(step.getDescription());
         textStepShortDescription.setText(step.getShortDescription());
+
     }
 }

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
@@ -73,12 +74,12 @@ public class StepListFragment extends LifecycleFragment {
 
 
         mIngredientsViewModel.getIngredientsByRecipe().observe(this, ingredients -> {
-            Log.d(TAG, "onActivityCreated: "+ingredients);
+            Log.d(TAG, "onActivityCreated: " + ingredients);
             mIngredientsAdapter.swapItemList(ingredients);
         });
 
         mStepsViewModel.getStepsByRecipe().observe(this, steps -> {
-            Log.d(TAG, "onActivityCreated: "+steps);
+            Log.d(TAG, "onActivityCreated: " + steps);
             mStepsAdapter.swapItemList(steps);
         });
     }
@@ -109,7 +110,7 @@ public class StepListFragment extends LifecycleFragment {
                 IngredientsViewModel vm = new IngredientsViewModel(new IngredientsRepositoryImpl(database.ingredientDao()));
                 String id = getRecipeId();
                 vm.loadAllByRecipeId(Integer.valueOf(id));
-                Toast.makeText(getContext(), "id (id): "+id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "id (id): " + id, Toast.LENGTH_SHORT).show();
                 return (T) vm;
             }
         }).get(IngredientsViewModel.class);
@@ -152,12 +153,9 @@ public class StepListFragment extends LifecycleFragment {
     }
 
 
-    private View.OnClickListener onStepClick = view -> {
-        Step step = (Step) view.getTag();
+    private AdapterCallback<Step> onStepClick = step -> {
         mStepSelectorViewModel.select(step);
-        Log.d(TAG, "onStepClick: "+step);
         EventBus.getDefault().post(new Object());
-
     };
 
 

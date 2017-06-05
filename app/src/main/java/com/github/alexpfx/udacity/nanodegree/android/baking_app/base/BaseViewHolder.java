@@ -22,10 +22,7 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder(View view, Context context){
         this(view);
         this.mContext = context;
-    }
 
-    public void setTag (Object tag){
-        itemView.setTag(tag);
     }
 
     protected Context getContext() {
