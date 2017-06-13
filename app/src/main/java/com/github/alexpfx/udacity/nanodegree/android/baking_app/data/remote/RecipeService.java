@@ -2,6 +2,8 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -25,26 +27,14 @@ public class RecipeService {
 
     }
 
-    public Flowable<Recipe[]> getAllRecipes() {
+    public Flowable<List<Recipe>> getAllRecipes() {
         return mEndpoints.getAllRecipes(URL);
     }
 
     interface Endpoints {
         @GET
-        Flowable<Recipe[]> getAllRecipes(@Url String url);
+        Flowable<List<Recipe>> getAllRecipes(@Url String url);
     }
 
-
-    public static void main(String[] args) {
-        Flowable<Recipe[]> allRecipes = new RecipeService().getAllRecipes();
-
-        allRecipes.subscribe(list -> {
-            for (Recipe recipe : list) {
-                System.out.println(recipe.getId());
-            }
-        });
-
-        System.out.println(allRecipes);
-    }
 
 }

@@ -8,94 +8,104 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.StepActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.StepMasterActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class RecipesFragment extends LifecycleFragment {
 
     private static final String TAG = "RecipesFragment";
-
     @BindView(R.id.recycler_recipes)
     RecyclerView recyclerRecipes;
 
     private RecipesAdapter adapterRecipes;
+
     private AdapterCallback<Recipe> mAdapterCallback = r -> {
-        Intent intent = new Intent(getContext(), StepActivity.class);
-        intent.putExtra(StepActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
+        Intent intent = new Intent(getContext(), StepMasterActivity.class);
+        intent.putExtra(StepMasterActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
         startActivity(intent);
     };
 
     private RecipesViewModel mViewModel;
+    private boolean mIsTablet;
 
     public RecipesFragment() {
-        // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        mIsTablet = getResources().getBoolean(R.bool.is_tablet);
 
-        View view = inflater.inflate(R.layout.fragment_recipes, container, false);
+        initializeViewModels();
+        observe();
 
-        ButterKnife.bind(this, view);
+    }
+
+    private void initializeViewModels() {
         BakingAppDatabase database =
-                Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
+                Room.databaseBuilder(getActivity().getApplicationContext(), BakingAppDatabase.class, "baking_database").build();
 
         mViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
             @Override
             public <T extends ViewModel> T create(Class<T> modelClass) {
-                RecipesViewModel viewModel = new RecipesViewModel(new RecipesRepositoryImpl(database.recipeDao()));
-                viewModel.loadAll();
+                RecipesViewModel viewModel = new RecipesViewModel(getActivity().getApplication(),
+                        new RecipesRepositoryImpl(new LocalDataSource(database)));
                 return (T) viewModel;
             }
         }).get(RecipesViewModel.class);
 
+        mViewModel.loadAll();
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_recipes, container, false);
+        ButterKnife.bind(this, view);
+
         setupRecycler();
-
-
-        mViewModel.getRecipes().observe(this, recipes -> {
-            adapterRecipes.swapItemList(recipes);
-        });
-
 
         return view;
 
     }
 
+    private void observe() {
+        mViewModel.getRecipes().observeForever(recipes -> {
+            adapterRecipes.swapItemList(recipes);
+        });
+    }
+
     private void setupRecycler() {
         adapterRecipes = new RecipesAdapter(getContext(), mAdapterCallback);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerRecipes.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager layoutManager;
+
+        if (!mIsTablet) {
+            layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        } else {
+            layoutManager = new GridLayoutManager(getContext(), 3);
+        }
         recyclerRecipes.setAdapter(adapterRecipes);
-
-        final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerRecipes.getContext(),
-                layoutManager.getOrientation());
-
-        recyclerRecipes.addItemDecoration(dividerItemDecoration);
-
+        recyclerRecipes.setLayoutManager(layoutManager);
 
     }
+
 
 }

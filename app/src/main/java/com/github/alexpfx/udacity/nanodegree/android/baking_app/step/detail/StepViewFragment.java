@@ -9,7 +9,6 @@ import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,8 +42,6 @@ public class StepViewFragment extends LifecycleFragment {
     @BindView(R.id.recycler_step_view)
 
 
-
-
     RecyclerView mRecyclerStepView;
 
     private StepsViewModel mStepsViewModel;
@@ -59,12 +56,15 @@ public class StepViewFragment extends LifecycleFragment {
 
     private StepsRepositoryImpl mRepository;
 
+    private int mStep_id;
+    private int mRecipe_id;
+
 
     private void load(int id, int recipeId) {
         mStepsViewModel.load(id, recipeId);
 
-        mStepsViewModel.getStep().observe(this, step ->{
-            if (step == null){
+        mStepsViewModel.getStep().observe(this, step -> {
+            if (step == null) {
                 Toast.makeText(getContext(), "The step doesn't exist!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -81,6 +81,7 @@ public class StepViewFragment extends LifecycleFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         BakingAppDatabase database =
                 Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
         mRepository = new StepsRepositoryImpl(database.stepDao());
@@ -98,6 +99,8 @@ public class StepViewFragment extends LifecycleFragment {
         mSharedViewModel.getSelected().observe(this, step -> {
             mAdapter.setData(step);
         });
+
+        load(mStep_id, mRecipe_id);
     }
 
 
@@ -115,20 +118,14 @@ public class StepViewFragment extends LifecycleFragment {
     }
 
     private void setupRecyclerView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerStepView.setHasFixedSize(true);
 
         mAdapter = new StepViewAdapter(getContext(), btnClickListener, btnClickListener);
 
         mRecyclerStepView.setAdapter(mAdapter);
 
-        final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
-                layoutManager.getOrientation());
-
-
-//        mRecyclerStepView.addItemDecoration(dividerItemDecoration);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerStepView.setLayoutManager(layoutManager);
-        mRecyclerStepView.setHasFixedSize(true);
-
 
     }
 
@@ -136,5 +133,11 @@ public class StepViewFragment extends LifecycleFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void init(int step_id, int recipe_id) {
+
+        mStep_id = step_id;
+        mRecipe_id = recipe_id;
     }
 }

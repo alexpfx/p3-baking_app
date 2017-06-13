@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps;
 
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,15 +8,15 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseViewHolder;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by alexandre on 27/05/2017.
  */
 
-public class StepsViewHolder extends BaseViewHolder {
+public class StepsViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.text_step_short_description)
     TextView textStepShortDescription;
@@ -29,6 +30,7 @@ public class StepsViewHolder extends BaseViewHolder {
 
     public StepsViewHolder(View view) {
         super(view);
+        ButterKnife.bind(this, view);
     }
 
     private static final String TAG = "StepsViewHolder";

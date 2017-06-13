@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ing
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +46,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsViewHold
         return itemList.size();
     }
 
+    private static final String TAG = "IngredientsAdapter";
+
 
     public void swapItemList(List<Ingredient> ingredients) {
         itemList = ingredients;
+        Log.d(TAG, "swapItemList: ");
+        notifyDataSetChanged();
     }
 }

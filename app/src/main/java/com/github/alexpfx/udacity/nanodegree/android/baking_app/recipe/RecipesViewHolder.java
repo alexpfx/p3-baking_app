@@ -1,6 +1,7 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,16 +9,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseViewHolder;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by alexandre on 25/05/2017.
  */
 
-public class RecipesViewHolder extends BaseViewHolder {
+public class RecipesViewHolder extends RecyclerView.ViewHolder {
 
+    private final Context mContext;
     @BindView(R.id.image_background)
     ImageView imageBackground;
 
@@ -25,7 +27,10 @@ public class RecipesViewHolder extends BaseViewHolder {
     TextView textRecipeName;
 
     public RecipesViewHolder(View view, Context context) {
-        super(view, context);
+        super(view);
+        ButterKnife.bind(this, view);
+
+        mContext = context;
     }
 
 
@@ -35,9 +40,9 @@ public class RecipesViewHolder extends BaseViewHolder {
 
         if (recipe.getImage() == null || recipe.getImage().isEmpty()) {
             int drawable = getRecipeImage(recipe);
-            Glide.with(getContext()).load(drawable).asBitmap().centerCrop().into(imageBackground);
+            Glide.with(mContext).load(drawable).asBitmap().centerCrop().into(imageBackground);
         } else {
-            Glide.with(getContext()).load(recipe.getImage()).asBitmap().centerCrop().into(imageBackground);
+            Glide.with(mContext).load(recipe.getImage()).asBitmap().centerCrop().into(imageBackground);
         }
         itemView.setTag(recipe);
     }
@@ -45,7 +50,7 @@ public class RecipesViewHolder extends BaseViewHolder {
     private int getRecipeImage(Recipe recipe) {
         String n = recipe.getName().toLowerCase().replaceAll("\\s", "");
 
-        return getContext().getResources().getIdentifier(n, "drawable", getContext().getPackageName());
+        return mContext.getResources().getIdentifier(n, "drawable", mContext.getPackageName());
 
     }
 

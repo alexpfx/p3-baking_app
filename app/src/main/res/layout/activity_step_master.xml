@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.step.StepActivity">
+    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.step.StepMasterActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +21,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_activity_step"/>
+    <fragment
+        android:id="@+id/step_list_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps.StepListFragment"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
 
 </android.support.design.widget.CoordinatorLayout>

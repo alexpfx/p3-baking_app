@@ -1,5 +1,8 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.detail;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +21,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 
-public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements LifecycleObserver {
 
 
     public static final int NAVIGATION = 0;
@@ -32,6 +35,12 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({PLAYER, STEP, NAVIGATION})
     @interface ViewTypes {
+    }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void onResume (){
+
     }
 
     private Step mStep;
@@ -53,6 +62,9 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
+        if (mStep == null){
+            return 0;
+        }
         return 3;
     }
 
@@ -77,6 +89,7 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (getItemViewType(position)) {
             case PLAYER:
                 ((PlayerViewHolder) holder).bind(mStep);
+
                 break;
             case STEP:
                 ((StepDetailViewHolder) holder).bind(mStep);
@@ -95,7 +108,7 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private StepDetailViewHolder inflateStep(LayoutInflater inflater, ViewGroup viewGroup) {
         final View view = inflater.inflate(R.layout.item_detail_step, viewGroup, false);
-        return new StepDetailViewHolder(view, mContext);
+        return new StepDetailViewHolder(view);
     }
 
     private NavigationViewHolder inflateNavigation(LayoutInflater inflater, ViewGroup viewGroup) {

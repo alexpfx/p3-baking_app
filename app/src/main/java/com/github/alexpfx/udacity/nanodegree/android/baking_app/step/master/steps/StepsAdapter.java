@@ -53,5 +53,6 @@ public class StepsAdapter extends RecyclerView.Adapter <StepsViewHolder> impleme
 
     public void swapItemList(List<Step> steps) {
         itemList = steps;
+        notifyDataSetChanged();
     }
 }

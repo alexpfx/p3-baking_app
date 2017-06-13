@@ -56,6 +56,11 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
     }
 
     public void swapItemList(List<Recipe> recipes) {
+        if (recipes == null){
+            return;
+        }
+
         this.mItemList = recipes;
+        notifyDataSetChanged();
     }
 }
