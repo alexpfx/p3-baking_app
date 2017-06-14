@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.BakingApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.IdsTO;
@@ -83,7 +83,7 @@ public class StepViewFragment extends LifecycleFragment {
         super.onActivityCreated(savedInstanceState);
 
         BakingAppDatabase database =
-                Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
+                Room.databaseBuilder(getContext(), BakingAppDatabase.class, BakingApplication.DATABASE_NAME).build();
         mRepository = new StepsRepositoryImpl(database.stepDao());
 
 

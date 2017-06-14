@@ -50,6 +50,8 @@ ext{
     eventBusVersion = '3.0.0'
     exoPlayerVersion = 'r2.4.1'
 
+    daggerVersion = '2.11'
+
     //
 
 

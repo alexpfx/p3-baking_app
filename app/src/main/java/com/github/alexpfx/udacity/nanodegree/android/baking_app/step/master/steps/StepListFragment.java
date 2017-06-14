@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.BaseApplication;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.BakingApplication;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
@@ -110,7 +110,7 @@ public class StepListFragment extends LifecycleFragment {
         mStepSelectorViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
 
         BakingAppDatabase database =
-                Room.databaseBuilder(getContext(), BakingAppDatabase.class, BaseApplication.DATABASE_NAME).build();
+                Room.databaseBuilder(getContext(), BakingAppDatabase.class, BakingApplication.DATABASE_NAME).build();
 
         mIngredientsViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
             @Override
