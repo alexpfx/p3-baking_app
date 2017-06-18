@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.RecipeService;
@@ -20,9 +19,11 @@ import retrofit2.Response;
 public class RecipesRepositoryImpl implements RecipesRepository {
 
 
-    private final RecipeService recipeService;
+    private static final String TAG = "RecipesRepositoryImpl";
 
+    private final RecipeService recipeService;
     private final Executor executor;
+
     private RecipeDataSource dataSource;
 
     public RecipesRepositoryImpl(RecipeService recipeService, Executor executor, RecipeDataSource dataSource) {
@@ -31,16 +32,12 @@ public class RecipesRepositoryImpl implements RecipesRepository {
         this.dataSource = dataSource;
     }
 
-    private MutableLiveData<List<Recipe>> data = new MutableLiveData<>();
-
     @Override
     public LiveData<List<Recipe>> getData() {
         refresh ();
 
         return dataSource.getRecipes();
     }
-
-    private static final String TAG = "RecipesRepositoryImpl";
 
     private void refresh() {
 

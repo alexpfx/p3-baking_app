@@ -52,9 +52,9 @@ public class RecipesFragment extends LifecycleFragment {
         intent.putExtra(StepMasterActivity.KEY_RECIPE_ID, String.valueOf(r.getId()));
         startActivity(intent);
     };
+
     public RecipesFragment() {
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
