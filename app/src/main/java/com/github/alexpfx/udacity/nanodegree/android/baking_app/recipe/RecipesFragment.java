@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,12 +68,6 @@ public class RecipesFragment extends LifecycleFragment {
     }
 
 
-    private void initializeViewModels() {
-        mViewModel = ViewModelProviders.of(this, factory).get(RecipesViewModel.class);
-        mViewModel.loadAll();
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,9 +77,14 @@ public class RecipesFragment extends LifecycleFragment {
 
     }
 
+    private void initializeViewModels() {
+        mViewModel = ViewModelProviders.of(this, factory).get(RecipesViewModel.class);
+        mViewModel.loadAll();
+
+    }
+
     private void observe() {
         mViewModel.getRecipes().observeForever(recipes -> {
-            Log.d(TAG, "observe: swapItemList");
             adapterRecipes.swapItemList(recipes);
         });
     }
@@ -95,16 +93,12 @@ public class RecipesFragment extends LifecycleFragment {
         RecyclerView.LayoutManager layoutManager;
 
         if (!mIsTablet) {
-            Log.d(TAG, "setupRecycler: ");
             layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         } else {
             layoutManager = new GridLayoutManager(getContext(), 3);
         }
-        Log.d(TAG, "setupRecycler: setLayoutManager");
-        Log.d(TAG, "setupRecycler: "+adapterRecipes);
         recyclerRecipes.setAdapter(adapterRecipes);
         recyclerRecipes.setLayoutManager(layoutManager);
-        Log.d(TAG, "setupRecycler: final: setLayoutManager");
 
     }
 

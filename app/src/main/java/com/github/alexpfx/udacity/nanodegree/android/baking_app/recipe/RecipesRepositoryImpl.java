@@ -63,8 +63,7 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     }
 
     private void storeResponse(Response<List<Recipe>> response) {
-        executor.execute(() -> dataSource.save(response.body()));
-
+        dataSource.save(response.body());
     }
 }
 
