@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.RecipeService;
@@ -46,7 +45,6 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     private void refresh() {
 
         executor.execute(() -> {
-            Log.d(TAG, "refresh: "+Thread.currentThread());
             if (!dataSource.hasData()) {
                 recipeService.getAllRecipes().enqueue(new Callback<List<Recipe>>() {
                     @Override

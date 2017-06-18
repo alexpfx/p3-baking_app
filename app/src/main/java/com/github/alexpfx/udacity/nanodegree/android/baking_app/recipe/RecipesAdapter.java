@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,13 @@ import javax.inject.Inject;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> implements View.OnClickListener {
 
+    private static final String TAG = "RecipesAdapter";
     private final Context mContext;
+
     private AdapterCallback<Recipe> mAdapterCallback;
 
-    private List<Recipe> mItemList = new ArrayList<>();
 
+    private List<Recipe> mItemList = new ArrayList<>();
 
     @Inject
     public RecipesAdapter(Context context) {
@@ -36,6 +39,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
         this.mAdapterCallback = callback;
     }
 
+
     @Override
     public RecipesViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recipe, viewGroup, false);
@@ -43,15 +47,14 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
         return new RecipesViewHolder(view, mContext);
     }
 
-
     @Override
     public void onBindViewHolder(RecipesViewHolder holder, int position) {
         Recipe recipe = mItemList.get(position);
         holder.bind(recipe);
     }
-
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: ");
         return mItemList.size();
     }
 

@@ -60,19 +60,12 @@ public class RecipesFragment extends LifecycleFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         ((HasComponent<RecipesComponent>) this.getActivity()).getComponent().inject(this);
-
         adapterRecipes.init(mAdapterCallback);
-
-
-        Log.d(TAG, "onActivityCreated: "+recipesRepository);
-
+        setupRecycler();
         mIsTablet = getResources().getBoolean(R.bool.is_tablet);
-
         initializeViewModels();
         observe();
-
     }
 
 
@@ -87,15 +80,13 @@ public class RecipesFragment extends LifecycleFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipes, container, false);
         ButterKnife.bind(this, view);
-
-        setupRecycler();
-
         return view;
 
     }
 
     private void observe() {
         mViewModel.getRecipes().observeForever(recipes -> {
+            Log.d(TAG, "observe: swapItemList");
             adapterRecipes.swapItemList(recipes);
         });
     }
@@ -104,12 +95,16 @@ public class RecipesFragment extends LifecycleFragment {
         RecyclerView.LayoutManager layoutManager;
 
         if (!mIsTablet) {
+            Log.d(TAG, "setupRecycler: ");
             layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         } else {
             layoutManager = new GridLayoutManager(getContext(), 3);
         }
+        Log.d(TAG, "setupRecycler: setLayoutManager");
+        Log.d(TAG, "setupRecycler: "+adapterRecipes);
         recyclerRecipes.setAdapter(adapterRecipes);
         recyclerRecipes.setLayoutManager(layoutManager);
+        Log.d(TAG, "setupRecycler: final: setLayoutManager");
 
     }
 
