@@ -13,6 +13,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by alexandre on 25/05/2017.
  */
@@ -25,9 +27,13 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
     private List<Recipe> mItemList = new ArrayList<>();
 
 
-    public RecipesAdapter(Context context, AdapterCallback<Recipe> adapterCallback) {
+    @Inject
+    public RecipesAdapter(Context context) {
         mContext = context;
-        mAdapterCallback = adapterCallback;
+    }
+
+    public void init (AdapterCallback callback){
+        this.mAdapterCallback = callback;
     }
 
     @Override

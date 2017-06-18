@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.arch.lifecycle.LiveData;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.IngredientDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.RecipeDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.StepDao;
@@ -13,31 +12,24 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 import java.util.List;
 
 /**
- * Created by alexandre on 08/06/2017.
+ * Created by alexandre on 16/06/2017.
  */
 
-public class LocalDataSource implements RecipesDataSource<LiveData<List<Recipe>>>, WritableDataSource<List<Recipe>> {
+public class RecipeLocalDataSource implements RecipeDataSource {
 
-    private BakingAppDatabase mDatabase;
+    private IngredientDao ingredientDao;
+    private RecipeDao recipeDao;
+    private StepDao stepDao;
 
-
-    public LocalDataSource(BakingAppDatabase database) {
-        mDatabase = database;
+    public RecipeLocalDataSource(RecipeDao recipeDao, StepDao stepDao, IngredientDao ingredientDao) {
+        this.ingredientDao = ingredientDao;
+        this.recipeDao = recipeDao;
+        this.stepDao = stepDao;
     }
 
-    private static final String TAG = "LocalDataSource";
 
     @Override
-    public LiveData<List<Recipe>> getRecipes() {
-        LiveData<List<Recipe>> data = mDatabase.recipeDao().getAll();
-        return data;
-    }
-
-    @Override
-    public void saveRecipes(List<Recipe> recipes) {
-        RecipeDao recipeDao = mDatabase.recipeDao();
-        IngredientDao ingredientDao = mDatabase.ingredientDao();
-        StepDao stepDao = mDatabase.stepDao();
+    public void save(List<Recipe> recipes) {
         for (Recipe recipe : recipes) {
             recipeDao.insert(recipe);
             int count = 1;
@@ -55,4 +47,16 @@ public class LocalDataSource implements RecipesDataSource<LiveData<List<Recipe>>
 
         }
     }
+
+    @Override
+    public LiveData<List<Recipe>> getRecipes() {
+        return recipeDao.getAll();
+    }
+
+    @Override
+    public boolean hasData() {
+        return recipeDao.hasData();
+    }
+
+
 }

@@ -20,20 +20,21 @@ import java.util.List;
 public interface RecipeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert (Recipe recipe);
+    void insert(Recipe recipe);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void update (Recipe recipe);
+    void update(Recipe recipe);
 
     @Delete
-    void delete (Recipe recipe);
+    void delete(Recipe recipe);
 
     @Query("select * from Recipes")
-    LiveData<List<Recipe>> getAll ();
+    LiveData<List<Recipe>> getAll();
 
     @Query("select * from recipes where id = :id")
-    LiveData<Recipe> getById (int id);
+    LiveData<Recipe> getById(int id);
 
-
+    @Query("select count (id) from recipes limit 1")
+    boolean hasData();
 
 }
