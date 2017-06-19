@@ -2,7 +2,9 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.arch.lifecycle.LiveData;
 
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.RecipeService;
 
 import java.util.List;
@@ -33,11 +35,36 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     }
 
     @Override
-    public LiveData<List<Recipe>> getData() {
-        refresh ();
+    public LiveData<List<Recipe>> getRecipes() {
+        refresh();
 
         return dataSource.getRecipes();
     }
+
+    @Override
+    public LiveData<List<Ingredient>> getIngredientsByRecipeId(int recipeId) {
+        refresh();
+
+        return dataSource.getIngredientsByRecipeId(recipeId);
+    }
+
+    @Override
+    public LiveData<List<Step>> getStepsByRecipeId(int recipeId) {
+        refresh();
+
+        return dataSource.getStepsByRecipeId(recipeId);
+    }
+
+    @Override
+    public LiveData<Step> getStep(int recipeId, int stepId) {
+        return null;
+    }
+
+    @Override
+    public LiveData<Ingredient> getIngredient(int recipeId, int ingredientId) {
+        return null;
+    }
+
 
     private void refresh() {
 

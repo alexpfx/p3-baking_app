@@ -22,7 +22,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewM
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.BakingAppDatabase;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.IdsTO;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps.StepsRepositoryImpl;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps.StepsViewModel;
 
 import butterknife.BindView;
@@ -54,7 +55,7 @@ public class StepViewFragment extends LifecycleFragment {
         load(idsTO.getId(), idsTO.getRecipeId());
     };
 
-    private StepsRepositoryImpl mRepository;
+    private RecipesRepository mRepository;
 
     private int mStep_id;
     private int mRecipe_id;
@@ -84,7 +85,7 @@ public class StepViewFragment extends LifecycleFragment {
 
         BakingAppDatabase database =
                 Room.databaseBuilder(getContext(), BakingAppDatabase.class, BakingApplication.DATABASE_NAME).build();
-        mRepository = new StepsRepositoryImpl(database.stepDao());
+        mRepository = new RecipesRepositoryImpl(null, null, null);
 
 
         mStepsViewModel = ViewModelProviders.of(getActivity(), new ViewModelProvider.Factory() {

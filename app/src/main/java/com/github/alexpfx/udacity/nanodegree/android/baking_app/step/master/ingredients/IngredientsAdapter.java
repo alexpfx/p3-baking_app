@@ -14,6 +14,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingred
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by alexandre on 27/05/2017.
  */
@@ -25,6 +27,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsViewHold
     private List<Ingredient> itemList = new ArrayList<>();
     private Context mContext;
 
+    @Inject
     public IngredientsAdapter(Context context) {
         mContext = context;
     }

@@ -2,7 +2,9 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.arch.lifecycle.LiveData;
 
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 
 import java.util.List;
 
@@ -11,5 +13,13 @@ import java.util.List;
  */
 
 public interface RecipesRepository  {
-    LiveData<List<Recipe>> getData();
+    LiveData<List<Recipe>> getRecipes();
+
+    LiveData<List<Ingredient>> getIngredientsByRecipeId (int recipeId);
+
+    LiveData<List<Step>> getStepsByRecipeId (int recipeId);
+    LiveData<Step> getStep (int recipeId, int stepId);
+    LiveData<Ingredient> getIngredient (int recipeId, int ingredientId);
+
+
 }

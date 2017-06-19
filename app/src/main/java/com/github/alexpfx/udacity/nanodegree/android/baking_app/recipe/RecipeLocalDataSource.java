@@ -29,6 +29,17 @@ public class RecipeLocalDataSource implements RecipeDataSource {
 
 
     @Override
+    public LiveData<List<Ingredient>> getIngredientsByRecipeId(int recipeId){
+        return ingredientDao.getAllByRecipeId(recipeId);
+    }
+
+    @Override
+    public LiveData<List<Step>> getStepsByRecipeId(int recipeId){
+        return stepDao.getAllByRecipe(recipeId);
+    }
+
+
+    @Override
     public void save(List<Recipe> recipes) {
         for (Recipe recipe : recipes) {
             recipeDao.insert(recipe);

@@ -13,6 +13,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by alexandre on 28/05/2017.
  */
@@ -22,9 +24,13 @@ public class StepsAdapter extends RecyclerView.Adapter <StepsViewHolder> impleme
     private AdapterCallback<Step> mAdapterCallback;
     private List<Step> itemList = new ArrayList<>();
 
-    public StepsAdapter(Context context, AdapterCallback<Step> adapterCallback) {
+    @Inject
+    public StepsAdapter(Context context) {
         mContext = context;
-        mAdapterCallback = adapterCallback;
+    }
+
+    public void init (AdapterCallback<Step> adapterCallback){
+        this.mAdapterCallback = adapterCallback;
     }
 
 

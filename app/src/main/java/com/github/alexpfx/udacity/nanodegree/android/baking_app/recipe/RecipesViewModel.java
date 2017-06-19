@@ -23,7 +23,7 @@ public class RecipesViewModel extends AndroidViewModel {
     }
 
     public final void loadAll() {
-        recipes = recipesRepository.getData();
+        recipes = recipesRepository.getRecipes();
     }
 
     public LiveData<List<Recipe>> getRecipes() {

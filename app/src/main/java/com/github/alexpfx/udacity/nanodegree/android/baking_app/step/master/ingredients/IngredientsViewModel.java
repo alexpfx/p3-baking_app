@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipesRepository;
 
 import java.util.List;
 
@@ -15,17 +16,22 @@ import java.util.List;
 public class IngredientsViewModel extends ViewModel {
 
     LiveData<List<Ingredient>> ingredientsByRecipe = null;
-    private IngredientsRepository mRepository;
+    private RecipesRepository mRepository;
 
-    public IngredientsViewModel(@NonNull IngredientsRepository repository) {
+    public IngredientsViewModel(@NonNull RecipesRepository repository) {
         mRepository = repository;
     }
 
     public final void loadAllByRecipeId(@NonNull Integer... recipeId) {
-        ingredientsByRecipe = mRepository.getAllByRecipeId(recipeId[0]);
+        ingredientsByRecipe = mRepository.getIngredientsByRecipeId(recipeId[0]);
     }
 
     public LiveData<List<Ingredient>> getIngredientsByRecipe() {
         return ingredientsByRecipe;
     }
+
+
+
 }
+
+
