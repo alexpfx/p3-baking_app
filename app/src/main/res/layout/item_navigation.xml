@@ -19,6 +19,7 @@
         />
 
     <TextView
+        android:background="@color/colorAccent"
         android:id="@+id/text_short_description"
         android:layout_toRightOf="@+id/btn_previous"
         android:layout_width="match_parent"

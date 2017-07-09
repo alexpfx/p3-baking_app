@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +18,17 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationModule;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ContextModule;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.di.DaggerStepMasterComponent;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.di.ViewModelModule;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.StepComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ingredients.IngredientsAdapter;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ingredients.IngredientsViewModel;
-
-import org.greenrobot.eventbus.EventBus;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.ingredients.IngredientsViewModelFactory;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,52 +48,57 @@ public class StepListFragment extends LifecycleFragment {
     @Inject
     StepsAdapter mStepsAdapter;
 
-    @Inject
     IngredientsViewModel ingredientsViewModel;
 
-    @Inject
     StepsViewModel stepsViewModel;
 
-    private SharedViewModel<Step> mStepSelectorViewModel;
+    SharedViewModel<Step> stepSharedViewModel;
 
     private String mRecipeId;
+    private SharedViewModel<String> recipeIdSharedViewModel;
 
+    @Inject
+    IngredientsViewModelFactory ingredientsViewModelFactory;
+
+    @Inject
+    StepViewModelFactory stepViewModelFactory;
 
     public StepListFragment() {
-        // Required empty public constructor
-    }
 
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ((HasComponent<StepComponent>) getActivity()).getComponent().inject(this);
 
-        DaggerStepMasterComponent.builder().applicationModule(new ApplicationModule(getActivity().getApplication())).contextModule(new ContextModule(getActivity()))
-                .viewModelModule(new ViewModelModule(this)).build().inject(this);
+        ingredientsViewModel = ViewModelProviders.of(this, ingredientsViewModelFactory).get(IngredientsViewModel.class);
+        stepsViewModel = ViewModelProviders.of(this, stepViewModelFactory).get(StepsViewModel.class);
 
         setupViewModels();
-
 
         mStepsAdapter.init(onStepClick);
 
         setupRecyclerView(mRecyclerIngredients, ingredientsAdapter);
         setupRecyclerView(mRecyclerSteps, mStepsAdapter);
 
-        observe();
-
     }
 
     private void observe() {
-        ingredientsViewModel.getIngredientsByRecipe().observe(this, ingredients -> {
-            Log.d(TAG, "onActivityCreated: " + ingredients);
-            ingredientsAdapter.swapItemList(ingredients);
-        });
+        ingredientsViewModel.loadAllByRecipeId(Integer.valueOf(mRecipeId));
+        stepsViewModel.loadAllByRecipeId(Integer.valueOf(mRecipeId));
 
-        stepsViewModel.getStepsByRecipe().observe(this, steps -> {
-            Log.d(TAG, "onActivityCreated: " + steps);
-            mStepsAdapter.swapItemList(steps);
-        });
+        ingredientsViewModel.getIngredientsByRecipe()
+                            .observe(this, ingredients -> {
+                                ingredientsAdapter.swapItemList(ingredients);
+                            });
+
+
+        stepsViewModel.getStepsByRecipe()
+                      .observe(this, steps -> {
+                          mStepsAdapter.swapItemList(steps);
+                      });
     }
 
     @Override
@@ -109,17 +111,17 @@ public class StepListFragment extends LifecycleFragment {
     }
 
     private void setupViewModels() {
-        mStepSelectorViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        recipeIdSharedViewModel = ViewModelProviders.of(getActivity())
+                                                    .get("recipe", SharedViewModel.class);
 
-        ingredientsViewModel.loadAllByRecipeId(Integer.valueOf(mRecipeId));
+        recipeIdSharedViewModel.getSelected()
+                               .observe(this, id -> {
+                                   mRecipeId = id;
+                                   observe();
+                               });
 
-        stepsViewModel.loadAllByRecipeId(Integer.valueOf(mRecipeId));
-
-    }
-
-
-    public void init(String recipeId) {
-        mRecipeId = recipeId;
+        stepSharedViewModel = ViewModelProviders.of(getActivity())
+                                                .get("step", SharedViewModel.class);
 
     }
 
@@ -135,19 +137,12 @@ public class StepListFragment extends LifecycleFragment {
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setNestedScrollingEnabled(false);
 
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
 
     private AdapterCallback<Step> onStepClick = step -> {
-        mStepSelectorViewModel.select(step);
-
-        EventBus.getDefault().post(step);
+        Timber.i("step selected: %s", step.getId());
+        stepSharedViewModel.select(step);
     };
 
 

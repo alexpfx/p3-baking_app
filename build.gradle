@@ -51,6 +51,7 @@ ext{
     exoPlayerVersion = 'r2.4.1'
 
     daggerVersion = '2.11'
+    timberVersion = '4.5.1'
 
     //
 

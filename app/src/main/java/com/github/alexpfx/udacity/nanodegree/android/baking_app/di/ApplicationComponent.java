@@ -1,14 +1,21 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.BakingApplication;
+import android.content.Context;
+
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipesRepository;
+
+import javax.inject.Singleton;
 
 import dagger.Component;
 
 /**
- * Created by alexandre on 16/06/2017.
+ * Created by alexandre on 01/07/2017.
  */
 
-@Component(modules = {ApplicationModule.class})
+@Singleton
+@Component(modules = {ApplicationModule.class, RepositoryModule.class})
 public interface ApplicationComponent {
-    void inject (BakingApplication application);
+    Context getApplicationContext();
+    RecipesRepository recipesRepository ();
+
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ import javax.inject.Inject;
 /**
  * Created by alexandre on 27/05/2017.
  */
-
+@PerActivity
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsViewHolder> {
 
     private AdapterCallback<Ingredient> mAdapterCallback;

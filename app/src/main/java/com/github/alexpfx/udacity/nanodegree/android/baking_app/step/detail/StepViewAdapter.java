@@ -16,6 +16,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import javax.inject.Inject;
+
 /**
  * Created by alexandre on 30/05/2017.
  */
@@ -32,6 +34,13 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private View.OnClickListener nextButtonClickListener;
 
 
+
+    public void init (View.OnClickListener previousButtonClickListener, View.OnClickListener nextButtonClickListener){
+        this.previousButtonClickListener = previousButtonClickListener;
+        this.nextButtonClickListener = nextButtonClickListener;
+    }
+
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({PLAYER, STEP, NAVIGATION})
     @interface ViewTypes {
@@ -45,12 +54,10 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Step mStep;
 
-    protected StepViewAdapter(Context context, View.OnClickListener previousButtonClickListener, View.OnClickListener nextButtonClickListener) {
+    @Inject
+    public StepViewAdapter(Context context) {
         mContext = context;
-        this.previousButtonClickListener = previousButtonClickListener;
 
-
-        this.nextButtonClickListener = nextButtonClickListener;
     }
 
     private static final String TAG = "StepViewAdapter";

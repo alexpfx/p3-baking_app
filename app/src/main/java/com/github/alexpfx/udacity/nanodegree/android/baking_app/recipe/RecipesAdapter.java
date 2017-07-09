@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.AdapterCallback;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 /**
  * Created by alexandre on 25/05/2017.
  */
-
+@PerActivity
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> implements View.OnClickListener {
 
     private static final String TAG = "RecipesAdapter";
@@ -29,6 +29,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
 
 
     private List<Recipe> mItemList = new ArrayList<>();
+
 
     @Inject
     public RecipesAdapter(Context context) {
@@ -54,7 +55,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
     }
     @Override
     public int getItemCount() {
-        Log.d(TAG, "getItemCount: ");
         return mItemList.size();
     }
 

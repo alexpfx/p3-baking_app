@@ -1,6 +1,7 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
 
 import android.arch.lifecycle.LiveData;
+import android.util.Log;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
@@ -10,6 +11,9 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.Reci
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,7 +21,7 @@ import retrofit2.Response;
 /**
  * Created by alexandre on 27/05/2017.
  */
-
+@Singleton
 public class RecipesRepositoryImpl implements RecipesRepository {
 
 
@@ -25,13 +29,15 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
     private final RecipeService recipeService;
     private final Executor executor;
-
     private RecipeDataSource dataSource;
 
+
+    @Inject
     public RecipesRepositoryImpl(RecipeService recipeService, Executor executor, RecipeDataSource dataSource) {
         this.recipeService = recipeService;
         this.executor = executor;
         this.dataSource = dataSource;
+        Log.d(TAG, "RecipesRepositoryImpl: ");
     }
 
     @Override
@@ -56,13 +62,13 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     }
 
     @Override
-    public LiveData<Step> getStep(int recipeId, int stepId) {
-        return null;
+    public LiveData<Step> getStep(int stepId, int recipeId) {
+        return dataSource.getStepById(stepId, recipeId);
     }
 
     @Override
-    public LiveData<Ingredient> getIngredient(int recipeId, int ingredientId) {
-        return null;
+    public LiveData<Ingredient> getIngredient(int ingredientId, int recipeId) {
+        return dataSource.getIngredientById(ingredientId, recipeId);
     }
 
 
@@ -70,17 +76,18 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
         executor.execute(() -> {
             if (!dataSource.hasData()) {
-                recipeService.getAllRecipes().enqueue(new Callback<List<Recipe>>() {
-                    @Override
-                    public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                        storeResponse(response);
-                    }
+                recipeService.getAllRecipes()
+                             .enqueue(new Callback<List<Recipe>>() {
+                                 @Override
+                                 public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                                     storeResponse(response);
+                                 }
 
-                    @Override
-                    public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                        throw new RuntimeException(t);
-                    }
-                });
+                                 @Override
+                                 public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                                     throw new RuntimeException(t);
+                                 }
+                             });
             }
 
         });

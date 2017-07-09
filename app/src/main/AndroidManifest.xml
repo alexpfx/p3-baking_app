@@ -30,7 +30,6 @@
             android:label="@string/title_activity_recipe_detail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".step.detail.StepDetailActivity"/>
     </application>
 
 </manifest>

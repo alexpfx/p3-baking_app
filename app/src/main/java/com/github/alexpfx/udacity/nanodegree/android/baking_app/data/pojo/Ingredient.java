@@ -25,7 +25,6 @@ public class Ingredient {
 
     private Integer recipeId;
 
-
     public double getQuantity() {
         return quantity;
     }

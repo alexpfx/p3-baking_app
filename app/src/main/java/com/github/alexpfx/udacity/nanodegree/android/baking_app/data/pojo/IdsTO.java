@@ -19,4 +19,12 @@ public class IdsTO {
     public Integer getRecipeId() {
         return recipeId;
     }
+
+    @Override
+    public String toString() {
+        return "IdsTO{" +
+                "id=" + id +
+                ", recipeId=" + recipeId +
+                '}';
+    }
 }

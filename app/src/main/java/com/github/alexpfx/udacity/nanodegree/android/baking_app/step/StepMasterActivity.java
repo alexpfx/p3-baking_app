@@ -1,27 +1,37 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.step;
 
-import android.content.Intent;
+import android.arch.lifecycle.LifecycleRegistry;
+import android.arch.lifecycle.LifecycleRegistryOwner;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.base.SharedViewModel;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.detail.StepDetailActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ActivityModule;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.DaggerStepComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.StepComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.detail.StepViewFragment;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.steps.StepListFragment;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import timber.log.Timber;
 
-public class StepMasterActivity extends AppCompatActivity {
+
+public class StepMasterActivity extends AppCompatActivity implements LifecycleRegistryOwner, SharedViewModel.OnSelectListener<Step>, HasComponent<StepComponent> {
 
     public static final String KEY_RECIPE_ID = "RECIPE_ID";
 
     private static final String TAG = "StepActivity";
-    private boolean mTwoPane;
+    private boolean isTablet;
+
+    private final LifecycleRegistry mRegistry = new LifecycleRegistry(this);
+
+    SharedViewModel<String> recipeIdSharedViewModel;
+    private StepComponent stepComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +40,33 @@ public class StepMasterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mTwoPane = getResources().getBoolean(R.bool.is_tablet);
+        isTablet = getResources().getBoolean(R.bool.is_tablet);
+
+        stepComponent = DaggerStepComponent.builder()
+                           .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent())
+                           .activityModule(new ActivityModule(this)).build();
 
         if (savedInstanceState == null) {
             String recipeId = getIntent().getStringExtra(KEY_RECIPE_ID);
-            StepListFragment fragment = (StepListFragment) getSupportFragmentManager().findFragmentById(R.id.step_list_fragment);
-            fragment.init(recipeId);
 
-            if (mTwoPane) {
-                StepViewFragment stepViewFragment = new StepViewFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.step_detail_container, stepViewFragment).commit();
+            SharedViewModel step = ViewModelProviders.of(this)
+                                                     .get("step", SharedViewModel.class);
+            step.setListener(this);
+
+            recipeIdSharedViewModel = ViewModelProviders.of(this)
+                                                        .get("recipe", SharedViewModel.class);
+            recipeIdSharedViewModel.select(recipeId);
+
+
+            if (isTablet) {
+                Timber.i("two pane");
+
+            } else {
+                Timber.i("one pane");
+                StepListFragment stepListFragment = new StepListFragment();
+                getSupportFragmentManager().beginTransaction()
+                                           .replace(R.id.step_master_container, stepListFragment)
+                                           .commit();
             }
         }
 
@@ -47,36 +74,25 @@ public class StepMasterActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-
+    public LifecycleRegistry getLifecycle() {
+        return mRegistry;
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-
+    public void selected(Step item) {
+        Timber.i("step selected: %s", item.getId());
+        getSupportFragmentManager().beginTransaction()
+                                   .addToBackStack(null)
+                                   .replace(R.id.step_master_container, new StepViewFragment())
+                                   .commit();
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShowStepViewMessage(Step step) {
-        Log.d(TAG, "onShowStepViewMessage: ");
-
-        if (mTwoPane) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.step_detail_container, new StepViewFragment()).commit();
-        } else {
-            Intent intent = new Intent(getApplicationContext(), StepDetailActivity.class);
-            intent.putExtra("step_id", step.getId());
-            intent.putExtra("recipe_id", step.getRecipeId());
-            startActivity(intent);
-        }
 
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.detail_main_content, new StepViewFragment()).addToBackStack(null).commit();
+
+    @Override
+    public StepComponent getComponent() {
+        return stepComponent;
     }
-
-
 }

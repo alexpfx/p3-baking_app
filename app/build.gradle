@@ -69,7 +69,7 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:' + supportVersion
 
 
-    compile 'org.greenrobot:eventbus:' + eventBusVersion
+//    compile 'org.greenrobot:eventbus:' + eventBusVersion
 
     compile 'com.google.android.exoplayer:exoplayer-core:'+exoPlayerVersion
     compile 'com.google.android.exoplayer:exoplayer-dash:'+exoPlayerVersion
@@ -78,5 +78,7 @@ dependencies {
 
     compile 'com.google.dagger:dagger:'+daggerVersion
     annotationProcessor 'com.google.dagger:dagger-compiler:'+daggerVersion
+
+    compile 'com.jakewharton.timber:timber:'+timberVersion
 
 }

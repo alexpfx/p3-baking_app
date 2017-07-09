@@ -33,7 +33,7 @@ public class StepsViewModel extends ViewModel {
     }
 
     public void load(int id, int recipeId) {
-        step = mRepository.getStep(id, recipeId);
+        step = mRepository.getStep(recipeId, id);
     }
 
     public LiveData<Step> getStep() {

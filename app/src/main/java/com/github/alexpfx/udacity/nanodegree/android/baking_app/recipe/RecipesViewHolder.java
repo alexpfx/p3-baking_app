@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Recipe;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,6 +28,7 @@ public class RecipesViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_recipe_name)
     TextView textRecipeName;
 
+    @Inject
     public RecipesViewHolder(View view, Context context) {
         super(view);
         ButterKnife.bind(this, view);

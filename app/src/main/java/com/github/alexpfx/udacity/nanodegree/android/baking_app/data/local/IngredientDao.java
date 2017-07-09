@@ -31,8 +31,8 @@ public interface IngredientDao {
     @Query("select * from ingredients")
     LiveData<List<Ingredient>> getAll ();
 
-    @Query("select * from ingredients where id = :id")
-    LiveData<Ingredient> getByid (int id);
+    @Query("select * from ingredients where id = :id and recipeId= :recipeId")
+    LiveData<Ingredient> get(int id, int recipeId);
 
     @Query("select * from ingredients where recipeId = :recipeId")
     LiveData<List<Ingredient>> getAllByRecipeId (int recipeId);

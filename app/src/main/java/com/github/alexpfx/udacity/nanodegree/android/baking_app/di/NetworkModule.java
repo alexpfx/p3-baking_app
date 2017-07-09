@@ -4,9 +4,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.Reci
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.RecipeServiceImpl;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,29 +14,26 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by alexandre on 18/06/2017.
+ * Created by alexandre on 02/07/2017.
  */
-
 @Module
 public class NetworkModule {
+    public static final String BASE_URL = "https://d17h27t6h515a5.cloudfront.net";
 
     @Provides
-    Retrofit retrofit(Executor executor){
-        return new Retrofit.Builder().callbackExecutor(executor).baseUrl("https://d17h27t6h515a5.cloudfront.net")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+    @Singleton
+    Retrofit retrofit(Executor executor) {
+        return new Retrofit.Builder().baseUrl(BASE_URL)
+                                     .addConverterFactory(
+                                             GsonConverterFactory.create())
+                                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                                     .callbackExecutor(executor)
+                                     .build();
     }
 
     @Provides
-    RecipeService getRecipeService(Retrofit retrofit) {
-        return new RecipeServiceImpl(retrofit);
+    @Singleton
+    RecipeService recipeService(RecipeServiceImpl recipeService) {
+        return recipeService;
     }
-
-    @Provides
-    Executor executor() {
-        return new ThreadPoolExecutor(4, 8, 160,
-                TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-    }
-
 }

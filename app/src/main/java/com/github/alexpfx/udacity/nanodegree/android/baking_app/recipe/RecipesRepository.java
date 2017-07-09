@@ -18,8 +18,8 @@ public interface RecipesRepository  {
     LiveData<List<Ingredient>> getIngredientsByRecipeId (int recipeId);
 
     LiveData<List<Step>> getStepsByRecipeId (int recipeId);
-    LiveData<Step> getStep (int recipeId, int stepId);
-    LiveData<Ingredient> getIngredient (int recipeId, int ingredientId);
+    LiveData<Step> getStep(int stepId, int recipeId);
+    LiveData<Ingredient> getIngredient(int ingredientId, int recipeId);
 
 
 }
