@@ -38,7 +38,6 @@ public class IngredientsViewModel extends ViewModel {
     }
 
 
-
 }
 
 

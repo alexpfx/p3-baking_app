@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by alexandre on 30/05/2017.
  */
 
-public class PlayerViewHolder extends RecyclerView.ViewHolder implements LifecycleObserver{
+public class PlayerViewHolder extends RecyclerView.ViewHolder implements LifecycleObserver {
 
     private final Context mContext;
     @BindView(R.id.video_player_view)
@@ -43,7 +43,8 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements Lifecyc
         super(view);
         mContext = context;
         ButterKnife.bind(this, view);
-        mExoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context), new DefaultTrackSelector(), new DefaultLoadControl());
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context), new
+                DefaultTrackSelector(), new DefaultLoadControl());
         mSimpleExoPlayerView.setPlayer((SimpleExoPlayer) mExoPlayer);
 
 
@@ -51,7 +52,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements Lifecyc
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void releasePlayer (){
+    public void releasePlayer() {
         mExoPlayer.stop();
         mExoPlayer.release();
         mExoPlayer = null;
@@ -62,7 +63,8 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder implements Lifecyc
 
     public void bind(Step step) {
         Log.d(TAG, "bind: " + step.getVideoURL());
-        if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
+        if (step.getVideoURL() == null || step.getVideoURL()
+                                              .isEmpty()) {
             mSimpleExoPlayerView.setVisibility(View.GONE);
             return;
         }

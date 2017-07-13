@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by alexandre on 24/05/2017.
  */
-@Entity(tableName = "ingredients", primaryKeys = {"id", "recipeId"},foreignKeys =
+@Entity(tableName = "ingredients", primaryKeys = {"id", "recipeId"}, foreignKeys =
 @ForeignKey(entity = Recipe.class, parentColumns = "id", childColumns = "recipeId"))
 public class Ingredient {
 

@@ -34,8 +34,7 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private View.OnClickListener nextButtonClickListener;
 
 
-
-    public void init (View.OnClickListener previousButtonClickListener, View.OnClickListener nextButtonClickListener){
+    public void init(View.OnClickListener previousButtonClickListener, View.OnClickListener nextButtonClickListener) {
         this.previousButtonClickListener = previousButtonClickListener;
         this.nextButtonClickListener = nextButtonClickListener;
     }
@@ -48,7 +47,7 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    public void onResume (){
+    public void onResume() {
 
     }
 
@@ -69,7 +68,7 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        if (mStep == null){
+        if (mStep == null) {
             return 0;
         }
         return 3;
@@ -127,7 +126,6 @@ public class StepViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mStep = step;
         notifyDataSetChanged();
     }
-
 
 
 }

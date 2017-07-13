@@ -57,7 +57,6 @@ public class RecipesFragment extends LifecycleFragment {
         intent.putExtra(StepMasterActivity.KEY_RECIPE_ID, String.valueOf(recipeId));
         Timber.i("selected recipe id: %s", recipeId);
         startActivity(intent);
-
     };
 
     public RecipesFragment() {
@@ -75,14 +74,15 @@ public class RecipesFragment extends LifecycleFragment {
 
         adapterRecipes.init(mAdapterCallback);
 
-        setupRecycler();
         isTablet = getResources().getBoolean(R.bool.is_tablet);
+        setupRecycler();
         initializeViewModels();
         observe();
     }
 
     private void initializeInjector() {
-        ApplicationComponent component = ((HasComponent<ApplicationComponent>) getActivity().getApplication()).getComponent();
+        ApplicationComponent component = ((HasComponent<ApplicationComponent>) getActivity().getApplication())
+                .getComponent();
         DaggerRecipeComponent.builder()
                              .activityModule(new ActivityModule(this.getActivity()))
                              .applicationComponent(component)
@@ -119,8 +119,7 @@ public class RecipesFragment extends LifecycleFragment {
 
     private void setupRecycler() {
         RecyclerView.LayoutManager layoutManager;
-
-
+        Timber.d("is tablet: %s", isTablet);
         if (!isTablet) {
             layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         } else {

@@ -70,11 +70,13 @@ public class StepListFragment extends LifecycleFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ((HasComponent<StepComponent>) getActivity()).getComponent()
+                                                     .inject(this);
 
-        ((HasComponent<StepComponent>) getActivity()).getComponent().inject(this);
-
-        ingredientsViewModel = ViewModelProviders.of(this, ingredientsViewModelFactory).get(IngredientsViewModel.class);
-        stepsViewModel = ViewModelProviders.of(this, stepViewModelFactory).get(StepsViewModel.class);
+        ingredientsViewModel = ViewModelProviders.of(this, ingredientsViewModelFactory)
+                                                 .get(IngredientsViewModel.class);
+        stepsViewModel = ViewModelProviders.of(this, stepViewModelFactory)
+                                           .get(StepsViewModel.class);
 
         setupViewModels();
 

@@ -38,10 +38,10 @@ public class StepsViewHolder extends RecyclerView.ViewHolder {
     public void bind(Step step) {
         itemView.setTag(step);
         String videoURL = step.getVideoURL();
-        Log.d(TAG, "bind: getVideoURL"+ videoURL);
-        if (videoURL != null && !videoURL.isEmpty()){
+        Log.d(TAG, "bind: getVideoURL" + videoURL);
+        if (videoURL != null && !videoURL.isEmpty()) {
             mImageAsVideo.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mImageAsVideo.setVisibility(View.INVISIBLE);
         }
 

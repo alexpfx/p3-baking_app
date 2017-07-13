@@ -12,13 +12,15 @@ import java.util.List;
  * Created by alexandre on 07/06/2017.
  */
 
-public interface RecipesRepository  {
+public interface RecipesRepository {
     LiveData<List<Recipe>> getRecipes();
 
-    LiveData<List<Ingredient>> getIngredientsByRecipeId (int recipeId);
+    LiveData<List<Ingredient>> getIngredientsByRecipeId(int recipeId);
 
-    LiveData<List<Step>> getStepsByRecipeId (int recipeId);
+    LiveData<List<Step>> getStepsByRecipeId(int recipeId);
+
     LiveData<Step> getStep(int stepId, int recipeId);
+
     LiveData<Ingredient> getIngredient(int ingredientId, int recipeId);
 
 

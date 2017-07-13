@@ -41,19 +41,31 @@ public class RecipesViewHolder extends RecyclerView.ViewHolder {
         String name = recipe.getName();
         textRecipeName.setText(name);
 
-        if (recipe.getImage() == null || recipe.getImage().isEmpty()) {
+        if (recipe.getImage() == null || recipe.getImage()
+                                               .isEmpty()) {
             int drawable = getRecipeImage(recipe);
-            Glide.with(mContext).load(drawable).asBitmap().centerCrop().into(imageBackground);
+            Glide.with(mContext)
+                 .load(drawable)
+                 .asBitmap()
+                 .centerCrop()
+                 .into(imageBackground);
         } else {
-            Glide.with(mContext).load(recipe.getImage()).asBitmap().centerCrop().into(imageBackground);
+            Glide.with(mContext)
+                 .load(recipe.getImage())
+                 .asBitmap()
+                 .centerCrop()
+                 .into(imageBackground);
         }
         itemView.setTag(recipe);
     }
 
     private int getRecipeImage(Recipe recipe) {
-        String n = recipe.getName().toLowerCase().replaceAll("\\s", "");
+        String n = recipe.getName()
+                         .toLowerCase()
+                         .replaceAll("\\s", "");
 
-        return mContext.getResources().getIdentifier(n, "drawable", mContext.getPackageName());
+        return mContext.getResources()
+                       .getIdentifier(n, "drawable", mContext.getPackageName());
 
     }
 

@@ -16,6 +16,7 @@ import dagger.Component;
 @Component(modules = {ApplicationModule.class, RepositoryModule.class})
 public interface ApplicationComponent {
     Context getApplicationContext();
-    RecipesRepository recipesRepository ();
+
+    RecipesRepository recipesRepository();
 
 }

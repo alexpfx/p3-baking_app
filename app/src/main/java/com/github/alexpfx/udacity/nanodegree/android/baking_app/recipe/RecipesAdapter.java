@@ -36,14 +36,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
         mContext = context;
     }
 
-    public void init (AdapterCallback callback){
+    public void init(AdapterCallback callback) {
         this.mAdapterCallback = callback;
     }
 
 
     @Override
     public RecipesViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recipe, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext())
+                                  .inflate(R.layout.item_recipe, viewGroup, false);
         view.setOnClickListener(this);
         return new RecipesViewHolder(view, mContext);
     }
@@ -53,6 +54,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
         Recipe recipe = mItemList.get(position);
         holder.bind(recipe);
     }
+
     @Override
     public int getItemCount() {
         return mItemList.size();
@@ -61,11 +63,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesViewHolder> impl
 
     @Override
     public void onClick(View v) {
+
         mAdapterCallback.receive((Recipe) v.getTag());
     }
 
     public void swapItemList(List<Recipe> recipes) {
-        if (recipes == null){
+        if (recipes == null) {
             return;
         }
 

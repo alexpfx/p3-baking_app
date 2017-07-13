@@ -12,6 +12,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.pojo.Step;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by alexandre on 30/05/2017.
@@ -30,7 +31,8 @@ public class NavigationViewHolder extends RecyclerView.ViewHolder {
     TextView textShortDescription;
 
 
-    public NavigationViewHolder(View view, Context context, View.OnClickListener previousButtonClickListener, View.OnClickListener nextButtonClickListener) {
+    public NavigationViewHolder(View view, Context context, View.OnClickListener previousButtonClickListener, View
+            .OnClickListener nextButtonClickListener) {
         super(view);
         ButterKnife.bind(this, view);
 
@@ -40,9 +42,10 @@ public class NavigationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Step step) {
-        if (step == null){
+        if (step == null) {
             return;
         }
+        Timber.d("step: ", step);
         int stepId = step.getId();
         int recipeId = step.getRecipeId();
 

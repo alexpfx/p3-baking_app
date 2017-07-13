@@ -86,14 +86,14 @@ public class Step {
     public String toString() {
         return "Step{" +
                 "id=" + id +
+                ", recipeId=" + recipeId +
                 ", shortDescription='" + shortDescription + '\'' +
                 ", description='" + description + '\'' +
                 ", videoURL='" + videoURL + '\'' +
                 ", thumbnailURL='" + thumbnailURL + '\'' +
-                ", recipeId=" + recipeId +
+
                 '}';
     }
-
 
 
 }

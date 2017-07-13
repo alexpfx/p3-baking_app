@@ -19,7 +19,7 @@ import javax.inject.Inject;
  * Created by alexandre on 28/05/2017.
  */
 
-public class StepsAdapter extends RecyclerView.Adapter <StepsViewHolder> implements View.OnClickListener {
+public class StepsAdapter extends RecyclerView.Adapter<StepsViewHolder> implements View.OnClickListener {
     private Context mContext;
     private AdapterCallback<Step> mAdapterCallback;
     private List<Step> itemList = new ArrayList<>();
@@ -29,14 +29,15 @@ public class StepsAdapter extends RecyclerView.Adapter <StepsViewHolder> impleme
         mContext = context;
     }
 
-    public void init (AdapterCallback<Step> adapterCallback){
+    public void init(AdapterCallback<Step> adapterCallback) {
         this.mAdapterCallback = adapterCallback;
     }
 
 
     @Override
     public StepsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_step, viewGroup, false);
+        View view = LayoutInflater.from(mContext)
+                                  .inflate(R.layout.item_step, viewGroup, false);
         view.setOnClickListener(this);
         return new StepsViewHolder(view);
     }

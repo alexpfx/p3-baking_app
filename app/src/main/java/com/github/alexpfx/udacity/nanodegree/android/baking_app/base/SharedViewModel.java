@@ -11,13 +11,14 @@ import android.arch.lifecycle.ViewModel;
 public class SharedViewModel<T> extends ViewModel {
 
     private final MutableLiveData<T> selected = new MutableLiveData<>();
-    private OnSelectListener<T> listener = item -> {};
+    private OnSelectListener<T> listener = item -> {
+    };
 
     public SharedViewModel() {
     }
 
-    public interface OnSelectListener <T> {
-        void selected (T item);
+    public interface OnSelectListener<T> {
+        void selected(T item);
     }
 
 
@@ -33,7 +34,6 @@ public class SharedViewModel<T> extends ViewModel {
     public LiveData<T> getSelected() {
         return selected;
     }
-
 
 
 }

@@ -9,10 +9,6 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipesRe
 
 import java.util.List;
 
-/**
- * Created by alexandre on 28/05/2017.
- */
-
 public class StepsViewModel extends ViewModel {
 
     private LiveData<List<Step>> stepsByRecipe;
@@ -33,7 +29,7 @@ public class StepsViewModel extends ViewModel {
     }
 
     public void load(int id, int recipeId) {
-        step = mRepository.getStep(recipeId, id);
+        step = mRepository.getStep(id, recipeId);
     }
 
     public LiveData<Step> getStep() {

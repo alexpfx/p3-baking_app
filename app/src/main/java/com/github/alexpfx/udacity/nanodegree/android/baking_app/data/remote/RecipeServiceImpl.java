@@ -17,12 +17,14 @@ import retrofit2.http.Url;
  * Created by alexandre on 23/05/2017.
  */
 
-public class RecipeServiceImpl implements RecipeService{
+public class RecipeServiceImpl implements RecipeService {
 
     private final Endpoints mEndpoints;
-    private static final String URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    private static final String URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking" +
+            ".json";
 
     private static final String TAG = "RecipeServiceImpl";
+
     @Inject
     public RecipeServiceImpl(Retrofit retrofit) {
         Log.d(TAG, "RecipeServiceImpl: ");

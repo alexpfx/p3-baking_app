@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
  * Created by alexandre on 27/05/2017.
  */
 
-public class IngredientsViewHolder extends RecyclerView.ViewHolder{
+public class IngredientsViewHolder extends RecyclerView.ViewHolder {
 
 
     @BindView(R.id.text_ingredient)
@@ -33,7 +33,8 @@ public class IngredientsViewHolder extends RecyclerView.ViewHolder{
 
     private String getFormatedText(Ingredient ingredient, double quantity) {
         if (quantity == (long) quantity) {
-            return String.format("%s %s - %s", String.valueOf(quantity), ingredient.getMeasure(), ingredient.getIngredient());
+            return String.format("%s %s - %s", String.valueOf(quantity), ingredient.getMeasure(), ingredient
+                    .getIngredient());
         } else {
             return String.format("%.1f %s - %s", quantity, ingredient.getMeasure(), ingredient.getIngredient());
         }

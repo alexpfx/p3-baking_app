@@ -77,35 +77,42 @@ public class StepViewFragment extends LifecycleFragment implements SharedViewMod
         super.onActivityCreated(savedInstanceState);
 
 
-        mStepsViewModel = ViewModelProviders.of(this, stepViewModelFactory).get(StepsViewModel.class);
-        stepSharedViewModel = ViewModelProviders.of(getActivity()).get("step", SharedViewModel.class);
+        mStepsViewModel = ViewModelProviders.of(this, stepViewModelFactory)
+                                            .get(StepsViewModel.class);
+        stepSharedViewModel = ViewModelProviders.of(getActivity())
+                                                .get("step", SharedViewModel.class);
 
-        stepSharedViewModel.getSelected().observe(this, step -> {
-            mAdapter.setData(step);
-            load(step.getId(), step.getRecipeId());
-        });
+        stepSharedViewModel.getSelected()
+                           .observe(this, step -> {
+                               Timber.d("selected: %s", step.getId());
+                               mAdapter.setData(step);
+                               load(step.getId(), step.getRecipeId());
+                           });
 
 
     }
 
     private void initializeInjection() {
-        ((HasComponent<StepComponent>) getActivity()).getComponent().inject(this);
+        ((HasComponent<StepComponent>) getActivity()).getComponent()
+                                                     .inject(this);
     }
 
 
     private void load(int id, int recipeId) {
 
+        Timber.d("loading : id: %s , recipe: %s", id, recipeId);
         mStepsViewModel.load(id, recipeId);
 
-        mStepsViewModel.getStep().observe(this, step -> {
-            if (step == null) {
-                Toast.makeText(getContext(), "Step doesn't exist!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            mAdapter.setData(step);
-        });
+        mStepsViewModel.getStep()
+                       .observe(this, step -> {
+                           if (step == null) {
+                               Toast.makeText(getContext(), "Step doesn't exist!", Toast.LENGTH_SHORT)
+                                    .show();
+                               return;
+                           }
+                           mAdapter.setData(step);
+                       });
     }
-
 
 
     @Override
@@ -147,6 +154,6 @@ public class StepViewFragment extends LifecycleFragment implements SharedViewMod
 
     @Override
     public void selected(Step item) {
-        Log.d(TAG, "selected: "+item);
+        Log.d(TAG, "selected: " + item);
     }
 }

@@ -11,8 +11,9 @@ import dagger.Component;
 
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
-public interface StepComponent extends ActivityComponent{
-//    void inject (StepMasterActivity stepMasterActivity);
-    void inject (StepListFragment stepListFragment);
-    void inject (StepViewFragment stepViewFragment);
+public interface StepComponent extends ActivityComponent {
+    //    void inject (StepMasterActivity stepMasterActivity);
+    void inject(StepListFragment stepListFragment);
+
+    void inject(StepViewFragment stepViewFragment);
 }

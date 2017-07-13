@@ -26,18 +26,16 @@ public interface IngredientDao {
     void update(Ingredient ingredient);
 
     @Delete
-    void delete (Ingredient ingredient);
+    void delete(Ingredient ingredient);
 
     @Query("select * from ingredients")
-    LiveData<List<Ingredient>> getAll ();
+    LiveData<List<Ingredient>> getAll();
 
     @Query("select * from ingredients where id = :id and recipeId= :recipeId")
     LiveData<Ingredient> get(int id, int recipeId);
 
     @Query("select * from ingredients where recipeId = :recipeId")
-    LiveData<List<Ingredient>> getAllByRecipeId (int recipeId);
-
-
+    LiveData<List<Ingredient>> getAllByRecipeId(int recipeId);
 
 
 }

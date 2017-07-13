@@ -21,7 +21,9 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.master.step
 import timber.log.Timber;
 
 
-public class StepMasterActivity extends AppCompatActivity implements LifecycleRegistryOwner, SharedViewModel.OnSelectListener<Step>, HasComponent<StepComponent> {
+public class StepMasterActivity extends AppCompatActivity implements LifecycleRegistryOwner, SharedViewModel
+        .OnSelectListener<Step>,
+        HasComponent<StepComponent> {
 
     public static final String KEY_RECIPE_ID = "RECIPE_ID";
 
@@ -43,8 +45,10 @@ public class StepMasterActivity extends AppCompatActivity implements LifecycleRe
         isTablet = getResources().getBoolean(R.bool.is_tablet);
 
         stepComponent = DaggerStepComponent.builder()
-                           .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent())
-                           .activityModule(new ActivityModule(this)).build();
+                                           .applicationComponent(((HasComponent<ApplicationComponent>) getApplication
+                                                   ()).getComponent())
+                                           .activityModule(new ActivityModule(this))
+                                           .build();
 
         if (savedInstanceState == null) {
             String recipeId = getIntent().getStringExtra(KEY_RECIPE_ID);
@@ -59,10 +63,9 @@ public class StepMasterActivity extends AppCompatActivity implements LifecycleRe
 
 
             if (isTablet) {
-                Timber.i("two pane");
+                /* do nothing for now, the layout is static in layout */
 
             } else {
-                Timber.i("one pane");
                 StepListFragment stepListFragment = new StepListFragment();
                 getSupportFragmentManager().beginTransaction()
                                            .replace(R.id.step_master_container, stepListFragment)
@@ -86,9 +89,6 @@ public class StepMasterActivity extends AppCompatActivity implements LifecycleRe
                                    .replace(R.id.step_master_container, new StepViewFragment())
                                    .commit();
     }
-
-
-
 
 
     @Override
